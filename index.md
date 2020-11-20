@@ -1,6 +1,10 @@
 ## Brice Allen ENVS-1044
 
-
+<object data="https://github.com/brice-allen/brice-allen-github.io/blob/gh-pages/environmental%20impact%20of%20wine.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="https://github.com/brice-allen/brice-allen-github.io/blob/gh-pages/environmental%20impact%20of%20wine.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/brice-allen/brice-allen-github.io/blob/gh-pages/environmental%20impact%20of%20wine.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
 
 
 You can use the [editor on GitHub](https://github.com/brice-allen/csci_3287-hw10/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
