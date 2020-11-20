@@ -1,5 +1,8 @@
 ## Brice Allen ENVS-1044
 
+
+<embed src="https://drive.google.com/file/d/1eCVUcdd_a5-HxACMWyPy2lLYv0_XjinO/view" width="800px" height="2100px" />
+
 <iframe src="http://docs.google.com/gview?url=https://github.com/brice-allen/brice-allen-github.io/blob/gh-pages/environmental%20impact%20of%20wine.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
 
 <object data="https://github.com/brice-allen/brice-allen-github.io/blob/gh-pages/environmental%20impact%20of%20wine.pdf" type="application/pdf" width="700px" height="700px">
