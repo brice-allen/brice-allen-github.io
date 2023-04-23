@@ -1,4 +1,4 @@
-# wwww.briceallen.como
+# briceallen.com
 
 This is a simple website built using HTML, CSS, JavaScript, and PHP. The website showcases the work and interests of Brice Allen, a developer and computer science student at the University of Colorado in Denver.
 
