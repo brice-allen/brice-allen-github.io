@@ -1,83 +1,79 @@
+/* FONT IMPORTS */
 @font-face {
-font-family: 'Brandon-Grotesque';
-src: url('BGREG.otf'); 
+  font-family: 'Brandon-Grotesque';
+  src: url('BGREG.otf');
 }
 
 @font-face {
-font-family: 'Brandon-Grotesque-Bold';
-font-weight: bold; 
-src: url('BGBOLD.otf');
+  font-family: 'Brandon-Grotesque-Bold';
+  font-weight: bold;
+  src: url('BGBOLD.otf');
 }
 
 @font-face {
-font-family: 'Brandon-Grotesque-black';
-font-weight: black; 
-src: url('BGBOLD.otf');
+  font-family: 'Brandon-Grotesque-Black';
+  font-weight: 900;
+  src: url('BGBOLD.otf');
 }
 
 @font-face {
-font-family: 'Brandon-Grotesque-thin';
-font-weight: thin; 
-src: url('BGBOLD.otf');
+  font-family: 'Brandon-Grotesque-Thin';
+  font-weight: 100;
+  src: url('BGBOLD.otf');
 }
+
 @font-face {
   font-family: 'ObjectSans';
-  src: url('fonts/ObjectSans-Regular.eot'); /* IE9 Compat Modes */
-  src: url('fonts/ObjectSans-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/ObjectSans-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/ObjectSans-Regular.woff') format('woff'), /* Pretty Modern Browsers */
-       url('fonts/ObjectSans-Regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/ObjectSans-Regular.eot');
+  src: url('fonts/ObjectSans-Regular.eot?#iefix') format('embedded-opentype'),
+       url('fonts/ObjectSans-Regular.woff2') format('woff2'),
+       url('fonts/ObjectSans-Regular.woff') format('woff'),
+       url('fonts/ObjectSans-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'ObjectSans-Heavy';
-  src: url('fonts/ObjectSans-Heavy.eot'); /* IE9 Compat Modes */
-  src: url('fonts/ObjectSans-Heavy.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/ObjectSans-Heavy.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/ObjectSans-Heavy.woff') format('woff'), /* Pretty Modern Browsers */
-       url('fonts/ObjectSans-Heavy.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('fonts/ObjectSans-Heavy.eot');
+  src: url('fonts/ObjectSans-Heavy.eot?#iefix') format('embedded-opentype'),
+       url('fonts/ObjectSans-Heavy.woff2') format('woff2'),
+       url('fonts/ObjectSans-Heavy.woff') format('woff'),
+       url('fonts/ObjectSans-Heavy.ttf') format('truetype');
 }
 
-/* UNIVERSAL */
-
+/* UNIVERSAL STYLES */
 html,
 body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  left: 0;
-  top: 0;
 }
 
 body {
   overflow-x: hidden;
+  font-family: 'ObjectSans', Helvetica, sans-serif;
+  font-weight: 300;
+  color: #161618;
 }
 
 body.dark {
   background-color: #161618;
 }
 
-* {
-  font-family: 'ObjectSans', Object Sans, Helvetica, sans-serif;
-  font-weight: 300;
-  color: #161618;
+/* TYPOGRAPHY */
+h1, h2 {
+  font-family: 'ObjectSans-Heavy', Helvetica, sans-serif;
+  font-weight: 800;
 }
 
-/* TYPOGRAPHY */
-
 h1 {
-  font-family: 'ObjectSans-Heavy', Helvetica, sans-serif;
   font-size: 1.75rem;
-  font-weight: 800;
   line-height: 1.4;
   margin-top: 44px;
 }
 
 h2 {
-  font-family: 'ObjectSans-Heavy', Helvetica, sans-serif;
   font-size: 1.25rem;
-  font-weight: 800;
   line-height: 1.75;
 }
 
@@ -91,7 +87,7 @@ p.x-large {
   line-height: 1.425;
 }
 
-p.label {
+p.label, li {
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -108,8 +104,6 @@ p.small {
 
 li {
   list-style: none;
-  font-size: 1rem;
-  line-height: 1.5;
 }
 
 li.large {
@@ -119,9 +113,6 @@ li.large {
 
 .navigation li {
   display: inline-block;
-}
-
-.navigation li {
   margin-right: 16px;
 }
 
@@ -148,7 +139,6 @@ a:hover {
 }
 
 /* ACCESSORY */
-
 .spacer {
   width: 100%;
   height: 64px;
@@ -175,23 +165,22 @@ a:hover {
 }
 
 .item-1-sm {
-  order: 1
+  order: 1;
 }
 
 .item-2-sm {
-  order: 2
+  order: 2;
 }
 
 .item-3-sm {
-  order: 3
+  order: 3;
 }
 
 .item-4-sm {
-  order: 4
+  order: 4;
 }
 
 /* CONTENT */
-
 section {
   padding-top: 48px;
 }
@@ -233,9 +222,6 @@ section.grey {
 }
 
 .featured-project:hover div {
-  -webkit-transform: scale(0.95);
-  -moz-transform: scale(0.95);
-  -o-transform: scale(0.95);
   transform: scale(0.95);
 }
 
@@ -247,7 +233,6 @@ section.grey {
 .visit-cta {
   display: flex;
   align-items: center;
-  align-content: center;
   justify-content: center;
   cursor: pointer;
 }
@@ -275,9 +260,6 @@ section.grey {
 }
 
 .visit-cta:hover .circle-animation {
-  -webkit-animation: pop 2s ease-out infinite;
-  -moz-animation: pop 2s ease-out infinite;
-  -o-animation: pop 2s ease-out infinite;
   animation: pop 2s ease-out infinite;
 }
 
@@ -311,64 +293,6 @@ section.grey {
 }
 
 /* KEYFRAMES */
-
-@-webkit-keyframes pop {
-  0% {
-    -webkit-transform: scale(1);
-    opacity: 0;
-  }
-  5% {
-    -webkit-transform: scale(1);
-    opacity: 0.5;
-  }
-  75% {
-    -webkit-transform: scale(4);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0;
-  }
-}
-
-@-moz-keyframes pop {
-  0% {
-    -moz-transform: scale(1);
-    opacity: 0;
-  }
-  5% {
-    -moz-transform: scale(1);
-    opacity: 0.5;
-  }
-  75% {
-    -moz-transform: scale(4);
-    opacity: 0;
-  }
-  100% {
-    -moz-transform: scale(1);
-    opacity: 0;
-  }
-}
-
-@-o-keyframes pop {
-  0% {
-    -o-transform: scale(1);
-    opacity: 0;
-  }
-  5% {
-    -o-transform: scale(1);
-    opacity: 0.5;
-  }
-  75% {
-    -o-transform: scale(4);
-    opacity: 0;
-  }
-  100% {
-    -o-transform: scale(1);
-    opacity: 0;
-  }
-}
-
 @keyframes pop {
   0% {
     transform: scale(1);
