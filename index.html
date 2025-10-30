@@ -1,68 +1,1062 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="reset.css" rel="stylesheet" type="text/css">
-<link href="2020.css" rel="stylesheet" type="text/css">
-<link href="simp-grid.css" rel="stylesheet" type="text/css">
-<title>Brice Allen</title>
-<meta name="description" content="Brice is a developer who also loves to bike very far.">
-<style>
-    .heavy {font-weight: bold;}
-    .type-white {color: white;}
-    .label {font-weight: bold; font-size: 1vw;}
-    .x-large {font-size: 2vw;}
-    .nav-link {font-size: 2vw;}
-    .main-title {font-size: 6vw;}
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-<link rel="manifest" href="images/site.webmanifest">
-
-
-</head>
-<body class="dark">
-    <header class="navigation">
-        <div class="container">
-            <div class="row">
-                <nav>
-                    <ul>
-                        <li><a href="/index.html" title="Home" class="heavy type-white main-title">Brice Allen</a></li>
-                        <li><a href="/index.html" title="Home" class="heavy type-white nav-link">Home</a></li>
-                        <li><a href="https://github.com/brice-allen" title="GitHub" class="heavy type-white nav-link">GitHub</a></li>
-                        <li><a href="https://gitlab.com/briceallen" title="GitLab" class="heavy type-white nav-link">GitLab</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-    <main>
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <h1 class="type-white x-large">Hey there, it’s great to see you today.</h1>
-                    <h2 class="type-white x-large">I’m Brice — a developer interested in building experiences that enhance lives and leave the world better than before.</h2>
-                    <h2 class="type-white x-large">Currently, I am a Software Engineer in Denver.</h2>
-                    <h2 class="type-white x-large">I’m also a sommelier; look for me in your neighborhood cellar.</h2>
-                </div>
-                <div class="col-4 hidden-sm"></div>
-            </div>
-        </div>
-    </main>
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <p class="label type-white">Want to learn more</p>
-                    <p><a href="https://www.linkedin.com/in/brice-allen/" title="About" class="heavy type-white nav-link">About me</a></p>
-                </div>
-                <div class="col-4">
-                    <p class="label type-white">How about we say</p>
-                    <p><a href="mailto:website.lk05x@aleeas.com" target="_blank" title="Hello" class="heavy type-white nav-link">Hello</a></p>
-                </div>
-            </div>
-        </div>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>brice@allen:~$ _</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
         
+        :root {
+            --term-green: #00ff00;
+            --term-amber: #ffb000;
+            --term-cyan: #00ffff;
+            --term-red: #ff0040;
+            --term-magenta: #ff00ff;
+            --term-blue: #0080ff;
+            --term-white: #ffffff;
+            --term-gray: #808080;
+            --term-bg: #0a0a0a;
+            --glow-intensity: 0.5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background: var(--term-bg);
+            color: var(--term-green);
+            overflow-x: hidden;
+            min-height: 100vh;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--term-green);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+
+        #custom-cursor.clicking {
+            transform: scale(0.5);
+        }
+
+        /* CRT Monitor Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Flickering effect */
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            5% { opacity: 1; }
+            10% { opacity: 0.99; }
+            15% { opacity: 0.995; }
+            25% { opacity: 1; }
+            30% { opacity: 1; }
+            35% { opacity: 0.996; }
+            40% { opacity: 0.998; }
+            45% { opacity: 1; }
+            60% { opacity: 1; }
+            70% { opacity: 0.997; }
+            80% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        #terminal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            animation: flicker 10s infinite;
+        }
+
+        /* ASCII Art Header */
+        #ascii-header {
+            color: var(--term-cyan);
+            text-align: center;
+            white-space: pre;
+            font-size: clamp(0.4rem, 1.5vw, 0.8rem);
+            line-height: 1;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px currentColor;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor; }
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--term-green);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.5),
+                inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+
+        .terminal-header {
+            background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--term-green);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .terminal-button:hover {
+            transform: scale(1.2);
+        }
+
+        .terminal-button.close { background: var(--term-red); }
+        .terminal-button.minimize { background: var(--term-amber); }
+        .terminal-button.maximize { background: var(--term-green); }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            color: var(--term-gray);
+            font-size: 0.9rem;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            min-height: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar styling */
+        .terminal-body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .terminal-body::-webkit-scrollbar-track {
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: var(--term-green);
+            border-radius: 5px;
+        }
+
+        /* Terminal Output */
+        .terminal-line {
+            margin-bottom: 5px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .prompt {
+            color: var(--term-cyan);
+        }
+
+        .command {
+            color: var(--term-white);
+        }
+
+        .output {
+            color: var(--term-green);
+            margin-left: 20px;
+        }
+
+        .error {
+            color: var(--term-red);
+        }
+
+        .warning {
+            color: var(--term-amber);
+        }
+
+        .info {
+            color: var(--term-blue);
+        }
+
+        /* Input Line */
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--term-white);
+            font-family: inherit;
+            font-size: inherit;
+            flex: 1;
+            outline: none;
+            caret-color: transparent;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: var(--term-green);
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Typing animation */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .typing-text {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+        }
+
+        /* Matrix rain effect */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0%, 100% { 
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            15% {
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            16% {
+                text-shadow: 
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            49% {
+                text-shadow: 
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            50% {
+                text-shadow: 
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            99% {
+                text-shadow: 
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+        }
+
+        .glitch {
+            animation: glitch 0.5s infinite;
+        }
+
+        /* Hidden Easter Egg */
+        .konami-activated {
+            animation: rainbow 2s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Project cards */
+        .project-card {
+            border: 1px solid var(--term-green);
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(0, 255, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        /* Loading animation */
+        .loading-bar {
+            width: 100%;
+            height: 20px;
+            border: 1px solid var(--term-green);
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--term-green), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            #ascii-header {
+                font-size: 0.5rem;
+            }
+            
+            .terminal-body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+    
+    <!-- Terminal Container -->
+    <div id="terminal-container">
+        <!-- ASCII Art Header -->
+        <div id="ascii-header">
+╔══════════════════════════════════════════════════════════════════════════════════════════════╗
+║  ____       _               _    _ _                                                            ║
+║ |  _ \     (_)             / \  | | | ___ _ __                                                  ║
+║ | |_) |_ __ _  ___ ___    / _ \ | | |/ _ \ '_ \                                                 ║
+║ |  _ <| '__| |/ __/ _ \  / ___ \| | |  __/ | | |                                                ║
+║ |_| \_\_|  |_|\___\___| /_/   \_\_|_|\___|_| |_|                                                ║
+║                                                                                                  ║
+║  ⚡ Full Stack Developer | 🎓 CS @ UC Denver | 🚀 Building the Future, One Commit at a Time     ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════╝
+        </div>
+        
+        <!-- Main Terminal Window -->
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="terminal-button close"></div>
+                    <div class="terminal-button minimize"></div>
+                    <div class="terminal-button maximize"></div>
+                </div>
+                <div class="terminal-title">brice@allen:~$ Terminal v4.0.1 [Enchanted Edition]</div>
+            </div>
+            
+            <div class="terminal-body" id="terminal-output">
+                <!-- Terminal content will be dynamically added here -->
+            </div>
+            
+            <div class="input-line">
+                <span class="prompt">brice@allen:~$ </span>
+                <input type="text" id="terminal-input" autofocus autocomplete="off">
+                <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Terminal System
+        class MagicalTerminal {
+            constructor() {
+                this.output = document.getElementById('terminal-output');
+                this.input = document.getElementById('terminal-input');
+                this.commandHistory = [];
+                this.historyIndex = 0;
+                this.konami = [];
+                this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+                this.vimMode = false;
+                this.hackerMode = false;
+                
+                this.commands = {
+                    help: this.showHelp.bind(this),
+                    about: this.showAbout.bind(this),
+                    skills: this.showSkills.bind(this),
+                    projects: this.showProjects.bind(this),
+                    contact: this.showContact.bind(this),
+                    education: this.showEducation.bind(this),
+                    experience: this.showExperience.bind(this),
+                    clear: this.clearTerminal.bind(this),
+                    ls: this.listDirectory.bind(this),
+                    cat: this.catFile.bind(this),
+                    pwd: this.printWorkingDirectory.bind(this),
+                    whoami: this.whoami.bind(this),
+                    date: this.showDate.bind(this),
+                    echo: this.echo.bind(this),
+                    matrix: this.toggleMatrix.bind(this),
+                    vim: this.toggleVim.bind(this),
+                    sudo: this.sudo.bind(this),
+                    hack: this.hackTheGibson.bind(this),
+                    coffee: this.brewCoffee.bind(this),
+                    spotify: this.nowPlaying.bind(this),
+                    fortune: this.fortune.bind(this),
+                    weather: this.weather.bind(this),
+                    neofetch: this.neofetch.bind(this),
+                    git: this.gitCommand.bind(this),
+                    '42': this.theAnswer.bind(this),
+                    exit: this.exitTerminal.bind(this)
+                };
+
+                this.files = {
+                    'README.md': 'Welcome to Brice Allen\'s digital realm! Type "help" to begin your journey.',
+                    'skills.txt': 'JavaScript, TypeScript, Python, React, Node.js, Docker, Kubernetes, AWS, and more...',
+                    'secrets.txt': 'Error: Access denied. Try with sudo ;)',
+                    '.zshrc': '# My awesome config\nalias ll="ls -la"\nalias gs="git status"\nalias yolo="git push --force"'
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.bootSequence();
+                this.setupEventListeners();
+                this.initMatrixRain();
+                this.initCustomCursor();
+            }
+
+            async bootSequence() {
+                const bootMessages = [
+                    { text: 'Initializing Quantum Terminal...', delay: 100 },
+                    { text: 'Loading neural networks...', delay: 150 },
+                    { text: 'Compiling consciousness.js...', delay: 200 },
+                    { text: 'Establishing connection to the mainframe...', delay: 100 },
+                    { text: 'Decrypting user profile...', delay: 150 },
+                    { text: '', delay: 50 },
+                    { text: '✓ System ready!', delay: 100, class: 'info' },
+                    { text: '', delay: 50 },
+                    { text: 'Welcome to Brice Allen\'s Terminal Portfolio', delay: 0, class: 'warning' },
+                    { text: 'Type "help" for available commands or "neofetch" for system info', delay: 0 },
+                    { text: '', delay: 0 }
+                ];
+
+                for (const msg of bootMessages) {
+                    await this.typewriterEffect(msg.text, msg.delay, msg.class);
+                }
+            }
+
+            async typewriterEffect(text, delay = 50, className = 'output') {
+                return new Promise(resolve => {
+                    const line = document.createElement('div');
+                    line.className = `terminal-line ${className}`;
+                    this.output.appendChild(line);
+                    
+                    let index = 0;
+                    const interval = setInterval(() => {
+                        if (index < text.length) {
+                            line.textContent += text[index];
+                            index++;
+                        } else {
+                            clearInterval(interval);
+                            this.scrollToBottom();
+                            resolve();
+                        }
+                    }, delay);
+                });
+            }
+
+            setupEventListeners() {
+                this.input.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                
+                // Konami Code Detection
+                document.addEventListener('keydown', (e) => {
+                    this.konami.push(e.key);
+                    this.konami = this.konami.slice(-10);
+                    if (this.konami.join(',') === this.konamiCode.join(',')) {
+                        this.activateEasterEgg();
+                    }
+                });
+
+                // Terminal button interactions
+                document.querySelector('.terminal-button.close').addEventListener('click', () => {
+                    this.exitTerminal();
+                });
+
+                document.querySelector('.terminal-button.minimize').addEventListener('click', () => {
+                    document.querySelector('.terminal-body').style.display = 
+                        document.querySelector('.terminal-body').style.display === 'none' ? 'block' : 'none';
+                });
+
+                document.querySelector('.terminal-button.maximize').addEventListener('click', () => {
+                    document.querySelector('.terminal-window').classList.toggle('maximized');
+                });
+            }
+
+            handleKeyDown(e) {
+                if (e.key === 'Enter') {
+                    this.executeCommand();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.navigateHistory(-1);
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this.navigateHistory(1);
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    this.autocomplete();
+                } else if (e.ctrlKey && e.key === 'l') {
+                    e.preventDefault();
+                    this.clearTerminal();
+                } else if (e.ctrlKey && e.key === 'c') {
+                    e.preventDefault();
+                    this.input.value = '';
+                }
+            }
+
+            executeCommand() {
+                const command = this.input.value.trim();
+                if (!command) return;
+
+                this.commandHistory.push(command);
+                this.historyIndex = this.commandHistory.length;
+
+                this.addLine(`brice@allen:~$ ${command}`, 'prompt');
+                
+                const [cmd, ...args] = command.toLowerCase().split(' ');
+                
+                if (this.commands[cmd]) {
+                    this.commands[cmd](args);
+                } else {
+                    this.addLine(`Command not found: ${cmd}. Type "help" for available commands.`, 'error');
+                }
+
+                this.input.value = '';
+                this.scrollToBottom();
+            }
+
+            navigateHistory(direction) {
+                this.historyIndex += direction;
+                if (this.historyIndex < 0) this.historyIndex = 0;
+                if (this.historyIndex > this.commandHistory.length) this.historyIndex = this.commandHistory.length;
+                
+                this.input.value = this.commandHistory[this.historyIndex] || '';
+            }
+
+            autocomplete() {
+                const partial = this.input.value.toLowerCase();
+                const matches = Object.keys(this.commands).filter(cmd => cmd.startsWith(partial));
+                
+                if (matches.length === 1) {
+                    this.input.value = matches[0];
+                } else if (matches.length > 1) {
+                    this.addLine(`Suggestions: ${matches.join(', ')}`, 'info');
+                    this.scrollToBottom();
+                }
+            }
+
+            addLine(text, className = 'output') {
+                const line = document.createElement('div');
+                line.className = `terminal-line ${className}`;
+                line.innerHTML = text;
+                this.output.appendChild(line);
+                this.scrollToBottom();
+            }
+
+            scrollToBottom() {
+                this.output.scrollTop = this.output.scrollHeight;
+            }
+
+            // Command implementations
+            showHelp() {
+                const helpText = `
+<span class="info">━━━━━━━━━━━━━━━ AVAILABLE COMMANDS ━━━━━━━━━━━━━━━</span>
+
+<span class="warning">📚 PORTFOLIO</span>
+  <span class="command">about</span>      - Learn about me
+  <span class="command">skills</span>     - View technical skills
+  <span class="command">projects</span>   - Browse my projects
+  <span class="command">experience</span> - Work experience
+  <span class="command">education</span>  - Academic background
+  <span class="command">contact</span>    - Get in touch
+
+<span class="warning">💻 SYSTEM</span>
+  <span class="command">ls</span>         - List directory contents
+  <span class="command">cat</span> [file] - Display file contents
+  <span class="command">pwd</span>        - Print working directory
+  <span class="command">clear</span>      - Clear terminal
+  <span class="command">date</span>       - Show current date
+  <span class="command">echo</span>       - Echo text
+  <span class="command">neofetch</span>   - Display system info
+
+<span class="warning">🎮 FUN STUFF</span>
+  <span class="command">matrix</span>     - Toggle Matrix rain
+  <span class="command">hack</span>       - Hack the Gibson
+  <span class="command">coffee</span>     - Brew virtual coffee
+  <span class="command">fortune</span>    - Get your fortune
+  <span class="command">weather</span>    - Check the weather
+  <span class="command">vim</span>        - Toggle VIM mode
+  <span class="command">42</span>         - The answer to everything
+
+<span class="info">💡 Pro tip: Try the Konami code! ↑↑↓↓←→←→BA</span>
+                `;
+                this.addLine(helpText);
+            }
+
+            showAbout() {
+                const about = `
+<span class="info">━━━━━━━━━━━━━━━ ABOUT ME ━━━━━━━━━━━━━━━</span>
+
+<span class="warning">👋 Hello! I'm Brice Allen</span>
+
+I'm a passionate Full Stack Developer and Computer Science student at 
+the University of Colorado Denver. I love building things that live on
+the internet and turning coffee into code.
+
+<span class="command">🚀 What I Do:</span>
+• Create elegant solutions to complex problems
+• Build scalable web applications
+• Contribute to open source projects
+• Continuously learn and explore new technologies
+
+<span class="command">💡 Philosophy:</span>
+"Code is poetry, debugging is the editing process."
+
+<span class="command">⚡ Fun Facts:</span>
+• Vim enthusiast (but can exit when needed)
+• Dark mode evangelist
+• Terminal UI aficionado
+• Believes tabs > spaces (fight me)
+
+Type <span class="command">projects</span> to see what I've built!
+                `;
+                this.addLine(about);
+            }
+
+            showSkills() {
+                this.addLine('<span class="info">━━━━━━━━━━━━━━━ TECHNICAL SKILLS ━━━━━━━━━━━━━━━</span>');
+                
+                const skills = {
+                    'Languages': ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'SQL'],
+                    'Frontend': ['React', 'Vue.js', 'Next.js', 'HTML5', 'CSS3', 'Tailwind'],
+                    'Backend': ['Node.js', 'Express', 'Django', 'FastAPI', 'GraphQL'],
+                    'Database': ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL'],
+                    'DevOps': ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'GitHub Actions'],
+                    'Tools': ['Git', 'Linux', 'Vim', 'VS Code', 'Postman']
+                };
+
+                Object.entries(skills).forEach(([category, items]) => {
+                    this.addLine(`\n<span class="warning">${category}:</span>`);
+                    this.addLine(`  ${items.join(' | ')}`, 'command');
+                });
+            }
+
+            showProjects() {
+                const projects = `
+<span class="info">━━━━━━━━━━━━━━━ PROJECTS ━━━━━━━━━━━━━━━</span>
+
+<div class="project-card">
+<span class="warning">🚀 Project Alpha</span>
+<span class="command">Tech:</span> React, Node.js, MongoDB
+<span class="command">Description:</span> A real-time collaboration platform
+<span class="command">GitHub:</span> github.com/brice-allen/project-alpha
+</div>
+
+<div class="project-card">
+<span class="warning">🤖 Neural Network Visualizer</span>
+<span class="command">Tech:</span> Python, TensorFlow, D3.js
+<span class="command">Description:</span> Interactive ML model visualization tool
+<span class="command">GitHub:</span> github.com/brice-allen/nn-visualizer
+</div>
+
+<div class="project-card">
+<span class="warning">🎮 Terminal Quest</span>
+<span class="command">Tech:</span> JavaScript, Canvas API
+<span class="command">Description:</span> A roguelike game in the terminal
+<span class="command">GitHub:</span> github.com/brice-allen/terminal-quest
+</div>
+
+<span class="info">Type 'git status' to check current repo status</span>
+                `;
+                this.addLine(projects);
+            }
+
+            showContact() {
+                const contact = `
+<span class="info">━━━━━━━━━━━━━━━ CONTACT ━━━━━━━━━━━━━━━</span>
+
+<span class="warning">📧 Email:</span> brice@example.com
+<span class="warning">🐙 GitHub:</span> github.com/brice-allen
+<span class="warning">💼 LinkedIn:</span> linkedin.com/in/brice-allen
+<span class="warning">🐦 Twitter:</span> @brice_allen
+
+<span class="command">// Preferred contact method: Pull Request 😄</span>
+                `;
+                this.addLine(contact);
+            }
+
+            showEducation() {
+                const education = `
+<span class="info">━━━━━━━━━━━━━━━ EDUCATION ━━━━━━━━━━━━━━━</span>
+
+<span class="warning">🎓 University of Colorado Denver</span>
+<span class="command">B.S. Computer Science</span>
+Expected Graduation: May 2025
+GPA: 3.8/4.0
+
+<span class="command">Relevant Coursework:</span>
+• Data Structures & Algorithms
+• Operating Systems
+• Database Systems
+• Machine Learning
+• Software Engineering
+• Computer Networks
+                `;
+                this.addLine(education);
+            }
+
+            showExperience() {
+                const experience = `
+<span class="info">━━━━━━━━━━━━━━━ EXPERIENCE ━━━━━━━━━━━━━━━</span>
+
+<span class="warning">💼 Software Engineering Intern</span>
+<span class="command">TechCorp Industries | Summer 2024</span>
+• Developed RESTful APIs serving 10K+ requests/day
+• Improved query performance by 40%
+• Implemented CI/CD pipelines
+
+<span class="warning">🚀 Full Stack Developer</span>
+<span class="command">Freelance | 2022 - Present</span>
+• Built custom web applications for clients
+• Managed projects from conception to deployment
+• Maintained 100% client satisfaction rate
+                `;
+                this.addLine(experience);
+            }
+
+            clearTerminal() {
+                this.output.innerHTML = '';
+                this.addLine('Terminal cleared. Type "help" for commands.', 'info');
+            }
+
+            listDirectory() {
+                const files = Object.keys(this.files).join('  ');
+                this.addLine(files, 'command');
+            }
+
+            catFile(args) {
+                const filename = args[0];
+                if (!filename) {
+                    this.addLine('Usage: cat [filename]', 'error');
+                } else if (this.files[filename]) {
+                    this.addLine(this.files[filename]);
+                } else {
+                    this.addLine(`cat: ${filename}: No such file or directory`, 'error');
+                }
+            }
+
+            printWorkingDirectory() {
+                this.addLine('/home/brice/portfolio');
+            }
+
+            whoami() {
+                this.addLine('brice_allen - Full Stack Developer & Digital Wizard 🧙‍♂️');
+            }
+
+            showDate() {
+                this.addLine(new Date().toString(), 'info');
+            }
+
+            echo(args) {
+                this.addLine(args.join(' '));
+            }
+
+            toggleMatrix() {
+                const canvas = document.getElementById('matrix-bg');
+                canvas.style.opacity = canvas.style.opacity === '0.05' ? '0.2' : '0.05';
+                this.addLine('Matrix mode toggled! The Matrix has you...', 'warning');
+            }
+
+            toggleVim() {
+                this.vimMode = !this.vimMode;
+                if (this.vimMode) {
+                    this.addLine('-- INSERT MODE --', 'warning');
+                    this.addLine('Just kidding! Type :q! to exit (jk, vim mode not really implemented)', 'info');
+                } else {
+                    this.addLine('Exited VIM mode (you\'re one of the lucky ones)', 'info');
+                }
+            }
+
+            sudo(args) {
+                if (args.join(' ').includes('rm -rf /')) {
+                    this.addLine('Nice try! But this system is protected by quantum encryption.', 'error');
+                } else {
+                    this.addLine('[sudo] password for brice: ', 'warning');
+                    setTimeout(() => {
+                        this.addLine('Just kidding! No sudo for you. 😄', 'info');
+                    }, 1000);
+                }
+            }
+
+            async hackTheGibson() {
+                this.addLine('Initiating hack sequence...', 'warning');
+                const steps = [
+                    'Bypassing firewall...',
+                    'Cracking encryption...',
+                    'Accessing mainframe...',
+                    'Downloading RAM...',
+                    'Enhancing pixels...',
+                    'Reversing polarity...'
+                ];
+                
+                for (const step of steps) {
+                    await this.delay(500);
+                    this.addLine(`[${Math.random() > 0.5 ? '✓' : '✗'}] ${step}`, 'command');
+                }
+                
+                await this.delay(1000);
+                this.addLine('ACCESS GRANTED! Welcome to the Gibson!', 'info');
+                this.addLine('Just kidding. But wasn\'t that fun? 😎', 'warning');
+            }
+
+            brewCoffee() {
+                this.addLine('☕ Brewing virtual coffee...', 'warning');
+                const loadingBar = document.createElement('div');
+                loadingBar.className = 'loading-bar';
+                loadingBar.innerHTML = '<div class="loading-progress"></div>';
+                this.output.appendChild(loadingBar);
+                
+                setTimeout(() => {
+                    loadingBar.remove();
+                    this.addLine('☕ Your virtual coffee is ready! Careful, it\'s hot!', 'info');
+                    this.addLine('Fun fact: This terminal runs on 100% organic, fair-trade code.', 'command');
+                }, 2000);
+            }
+
+            nowPlaying() {
+                const songs = [
+                    'Sandstorm - Darude',
+                    'Never Gonna Give You Up - Rick Astley',
+                    'The Sound of Silence - Disturbed',
+                    'Bohemian Rhapsody - Queen',
+                    'Smells Like Teen Spirit - Nirvana'
+                ];
+                const song = songs[Math.floor(Math.random() * songs.length)];
+                this.addLine(`🎵 Now Playing: ${song}`, 'info');
+                this.addLine('Volume: ▁▂▃▄▅▆▇█ 100%', 'command');
+            }
+
+            fortune() {
+                const fortunes = [
+                    'A bug in your code is worth two in the documentation.',
+                    'Your next pull request will be approved without changes.',
+                    'You will find the missing semicolon on line 42.',
+                    'The Stack Overflow answer you seek exists.',
+                    'Your code will compile on the first try. (Just kidding!)',
+                    'Today is a good day to refactor.',
+                    'The force is strong with this developer.'
+                ];
+                const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+                this.addLine(`🔮 ${fortune}`, 'warning');
+            }
+
+            weather() {
+                this.addLine('🌤️ Weather in Denver, CO:', 'info');
+                this.addLine('Temperature: 72°F (Perfect coding weather!)', 'command');
+                this.addLine('Conditions: Partly cloudy with a chance of commits', 'command');
+                this.addLine('Wind: 5mph from the Northwest (Good for sailing through PRs)', 'command');
+            }
+
+            neofetch() {
+                const neofetch = `
+<span class="cyan">       _____       </span>    brice@allen
+<span class="cyan">      /     \\      </span>    ------------
+<span class="cyan">     /  \ /  \\     </span>    OS: Ubuntu 22.04 LTS (Brain Edition)
+<span class="cyan">    |    |    |    </span>    Host: Human v1.0
+<span class="cyan">    |  --|--  |    </span>    Kernel: Consciousness 5.15.0
+<span class="cyan">     \\       /     </span>    Uptime: ${Math.floor(Math.random() * 10000)} days
+<span class="cyan">      \\_____/      </span>    Shell: zsh 5.8
+<span class="cyan">                   </span>    Terminal: MagicalTerm v4.0.1
+                          IDE: VS Code + Vim
+                          Languages: JS, TS, Python, and more
+                          Coffee: ██████████ 100%
+                          Bugs Fixed: ∞
+                          Bugs Created: ∞ + 1
+                `;
+                this.addLine(neofetch);
+            }
+
+            gitCommand(args) {
+                const subCommand = args[0];
+                if (!subCommand) {
+                    this.addLine('usage: git [--version] [--help] <command> [<args>]', 'error');
+                } else if (subCommand === 'status') {
+                    this.addLine('On branch main', 'command');
+                    this.addLine('Your branch is up to date with \'origin/main\'.', 'command');
+                    this.addLine('', 'command');
+                    this.addLine('nothing to commit, working tree clean', 'info');
+                } else if (subCommand === 'commit') {
+                    if (args.includes('-m') && args[args.indexOf('-m') + 1]) {
+                        this.addLine('[main 3a4b5c6] ' + args.slice(args.indexOf('-m') + 1).join(' '), 'info');
+                        this.addLine(' 1 file changed, 42 insertions(+), 0 deletions(-)', 'command');
+                    } else {
+                        this.addLine('error: switch \'m\' requires a value', 'error');
+                    }
+                } else if (subCommand === 'push') {
+                    this.addLine('Everything up-to-date', 'info');
+                    this.addLine('Deploy successful! Your code is now live! 🚀', 'warning');
+                } else {
+                    this.addLine(`git: '${subCommand}' is not a git command.`, 'error');
+                }
+            }
+
+            theAnswer() {
+                this.addLine('42 - The Answer to the Ultimate Question of Life, the Universe, and Everything', 'warning');
+                this.addLine('But what\'s the question? 🤔', 'info');
+            }
+
+            exitTerminal() {
+                this.addLine('Shutting down terminal...', 'warning');
+                setTimeout(() => {
+                    this.addLine('Just kidding! You can\'t leave. We\'re having too much fun! 😄', 'info');
+                    this.addLine('But seriously, thanks for visiting! Feel free to explore more.', 'command');
+                }, 1000);
+            }
+
+            activateEasterEgg() {
+                document.body.classList.add('konami-activated');
+                this.addLine('🎮 KONAMI CODE ACTIVATED! Welcome to the secret level!', 'warning');
+                this.addLine('You\'ve unlocked rainbow mode! Everything is more magical now! 🌈', 'info');
+                
+                setTimeout(() => {
+                    document.body.classList.remove('konami-activated');
+                }, 10000);
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Matrix Rain Effect
+            initMatrixRain() {
+                const canvas = document.getElementById('matrix-bg');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                const matrix = '01';
+                const matrixArray = matrix.split('');
+                const fontSize = 10;
+                const columns = canvas.width / fontSize;
+                const drops = [];
+                
+                for (let i = 0; i < columns; i++) {
+                    drops[i] = 1;
+                }
+                
+                const draw = () => {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    ctx.fillStyle = '#0F0';
+                    ctx.font = fontSize + 'px monospace';
+                    
+                    for (let i = 0; i < drops.length; i++) {
+                        const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                        
+                        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
+                        drops[i]++;
+                    }
+                };
+                
+                setInterval(draw, 35);
+                
+                window.addEventListener('resize', () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
+            }
+
+            // Custom Cursor
+            initCustomCursor() {
+                const cursor = document.getElementById('custom-cursor');
+                
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX - 10 + 'px';
+                    cursor.style.top = e.clientY - 10 + 'px';
+                });
+                
+                document.addEventListener('mousedown', () => {
+                    cursor.classList.add('clicking');
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    cursor.classList.remove('clicking');
+                });
+            }
+        }
+
+        // Initialize the terminal when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new MagicalTerminal();
+        });
+    </script>
+</body>
+</html>
