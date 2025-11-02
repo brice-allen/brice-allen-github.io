@@ -1,859 +1,847 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brice Allen — Developer & Digital Craftsman</title>
-  <meta name="description" content="Brice Allen — full-stack, systems-minded developer crafting quiet, durable software and small, humane systems. Projects include an Unraid homelab, THICK PIGEON (P2P game), and cryptkeys.rip." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --serif: 'Crimson Text', Georgia, serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --primary: #0a0a0a;
-      --secondary: #666;
-      --accent: #c9302c;
-      --accent-light: rgba(201, 48, 44, 0.1);
-      --bg: #fafaf9;
-      --bg-alt: #f5f5f4;
-      --bg-card: #ffffff;
-      --border: #e5e5e4;
-      --max-width: 720px;
-      --spacing-unit: 1.618rem;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --radius: 4px;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brice Allen — Developer & Digital Craftsman</title>
+  <meta name="description" content="Brice Allen — full-stack, systems-minded developer crafting quiet, durable software and small, humane systems. Projects include an Unraid homelab, THICK PIGEON (P2P game), and cryptkeys.rip." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --serif: 'Crimson Text', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --primary: #0a0a0a;
+      --secondary: #666;
+      --accent: #c9302c;
+      --accent-light: rgba(201, 48, 44, 0.1);
+      --bg: #fafaf9;
+      --bg-alt: #f5f5f4;
+      --bg-card: #ffffff;
+      --border: #e5e5e4;
+      --max-width: 720px;
+      --spacing-unit: 1.618rem;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 4px;
+    }
 
-    .dark-mode {
-      --primary: #fafafa;
-      --secondary: #a8a8a8;
-      --accent: #e74c3c;
-      --accent-light: rgba(231, 76, 60, 0.1);
-      --bg: #121212;
-      --bg-alt: #1e1e1e;
-      --bg-card: #2a2a2a;
-      --border: #404040;
-    }
+    .dark-mode {
+      --primary: #fafafa;
+      --secondary: #a8a8a8;
+      --accent: #e74c3c;
+      --accent-light: rgba(231, 76, 60, 0.1);
+      --bg: #121212;
+      --bg-alt: #1e1e1e;
+      --bg-card: #2a2a2a;
+      --border: #404040;
+    }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; font-size: 18px; line-height: 1.618; }
+    html { scroll-behavior: smooth; font-size: 18px; line-height: 1.618; }
 
-    body {
-      font-family: var(--serif);
-      color: var(--primary);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: relative;
-      overflow-x: hidden;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
+    body {
+      font-family: var(--serif);
+      color: var(--primary);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-    /* Skip link */
-    .skip-link {
-      position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
-      z-index: 10000;
-    }
-    .skip-link:focus { left: 1rem; top: 1rem; width: auto; height: auto; padding: 0.5rem 0.75rem; background: var(--primary); color: var(--bg); z-index: 9999; border-radius: var(--radius); }
+    /* Skip link */
+    .skip-link {
+      position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+      z-index: 10000;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; width: auto; height: auto; padding: 0.5rem 0.75rem; background: var(--primary); color: var(--bg); z-index: 9999; border-radius: var(--radius); }
 
-    /* WebGL Canvas */
-    #webgl-canvas {
-      position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0.35;
-    }
+    /* WebGL Canvas */
+    #webgl-canvas {
+      position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0.35;
+    }
 
-    /* Noise overlay for texture */
-    .noise-overlay {
-      position: fixed; inset: 0; pointer-events: none; opacity: 0.02; z-index: 2;
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjEiIC8+PC9zdmc+');
-M   }
+    /* Noise overlay for texture */
+    .noise-overlay {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.02; z-index: 2;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjEiIC8+PC9zdmc+');
+    }
 
-    /* Main container */
-    .container { position: relative; z-index: 10; max-width: var(--max-width); margin: 0 auto; padding: 0 calc(var(--spacing-unit) * 1.25); }
+    /* Main container */
+    .container { position: relative; z-index: 10; max-width: var(--max-width); margin: 0 auto; padding: 0 calc(var(--spacing-unit) * 1.25); }
 
-    /* Header */
-    header { padding: calc(var(--spacing-unit) * 3) 0; border-bottom: 1px solid var(--border); margin-bottom: calc(var(--spacing-unit) * 2); }
+    /* Header */
+    header { padding: calc(var(--spacing-unit) * 3) 0; border-bottom: 1px solid var(--border); margin-bottom: calc(var(--spacing-unit) * 2); }
 
-    .masthead { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: calc(var(--spacing-unit) * 1.5); }
+    .masthead { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: calc(var(--spacing-unit) * 1.5); }
 
-    h1 { font-size: 2.618rem; font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; }
+    h1 { font-size: 2.618rem; font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; }
 
-    .tagline { font-family: var(--sans); font-size: 0.889rem; color: var(--secondary); font-weight: 400; letter-spacing: 0.02em; }
+    .tagline { font-family: var(--sans); font-size: 0.889rem; color: var(--secondary); font-weight: 400; letter-spacing: 0.02em; }
 
-    nav[aria-label] { display: flex; gap: calc(var(--spacing-unit) * 1.25); font-family: var(--sans); font-size: 0.833rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; flex-wrap: wrap; align-items: center; }
+    nav[aria-label] { display: flex; gap: calc(var(--spacing-unit) * 1.25); font-family: var(--sans); font-size: 0.833rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; flex-wrap: wrap; align-items: center; }
 
-    nav a { color: var(--primary); text-decoration: none; position: relative; transition: var(--transition); padding-bottom: 2px; }
-    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
-    nav a:hover { color: var(--accent); }
-    nav a:hover::after { width: 100%; }
-    nav a[aria-current="true"] { color: var(--accent); }
+    nav a { color: var(--primary); text-decoration: none; position: relative; transition: var(--transition); padding-bottom: 2px; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
+    nav a:hover { color: var(--accent); }
+    nav a:hover::after { width: 100%; }
+    nav a[aria-current="true"] { color: var(--accent); }
 
-    /* Theme toggle */
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-left: 1rem;
-    }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
-    }
-    .theme-toggle svg {
-      width: 1.2rem;
-      height: 1.2rem;
-      fill: var(--primary);
-      transition: var(--transition);
-    }
+    /* Theme toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-left: 1rem;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .theme-toggle svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: var(--primary);
+      transition: var(--transition);
+    }
 
-    /* Main content */
-    main { padding: calc(var(--spacing-unit) * 2) 0 calc(var(--spacing-unit) * 4); }
+    /* Main content */
+    main { padding: calc(var(--spacing-unit) * 2) 0 calc(var(--spacing-unit) * 4); }
 
-    .hero { margin-bottom: calc(var(--spacing-unit) * 4); position: relative; }
+    .hero { margin-bottom: calc(var(--spacing-unit) * 4); position: relative; }
 
-    .hero h2 { font-size: 2rem; font-weight: 400; line-height: 1.3; margin-bottom: var(--spacing-unit); font-style: italic; }
+    .hero h2 { font-size: 2rem; font-weight: 400; line-height: 1.3; margin-bottom: var(--spacing-unit); font-style: italic; }
 
-    .hero p { font-size: 1.1rem; line-height: 1.7; color: var(--secondary); }
+    .hero p { font-size: 1.1rem; line-height: 1.7; color: var(--secondary); }
 
-    /* Drop cap */
-    .drop-cap { float: left; font-size: 4.236rem; line-height: 0.8; margin: 0.1em 0.1em 0 0; font-weight: 600; color: var(--accent); }
+    /* Drop cap */
+    .drop-cap { float: left; font-size: 4.236rem; line-height: 0.8; margin: 0.1em 0.1em 0 0; font-weight: 600; color: var(--accent); }
 
-    /* Sections */
-    section { margin-bottom: calc(var(--spacing-unit) * 3); opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards; }
-    section:nth-of-type(1) { animation-delay: 0.08s; }
-    section:nth-of-type(2) { animation-delay: 0.16s; }
-    section:nth-of-type(3) { animation-delay: 0.24s; }
-    section:nth-of-type(4) { animation-delay: 0.32s; }
+    /* Sections */
+    section { margin-bottom: calc(var(--spacing-unit) * 3); opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards; }
+    section:nth-of-type(1) { animation-delay: 0.08s; }
+    section:nth-of-type(2) { animation-delay: 0.16s; }
+    section:nth-of-type(3) { animation-delay: 0.24s; }
+    section:nth-of-type(4) { animation-delay: 0.32s; }
 
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-    h2 { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--spacing-unit); }
+    h2 { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--spacing-unit); }
 
-    /* Project grid */
-    .projects-grid { display: grid; gap: calc(var(--spacing-unit) * 1.25); margin-top: calc(var(--spacing-unit) * 1.25); }
+    /* Project grid */
+    .projects-grid { display: grid; gap: calc(var(--spacing-unit) * 1.25); margin-top: calc(var(--spacing-unit) * 1.25); }
 
-    .project { padding: calc(var(--spacing-unit) * 1.25); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); cursor: pointer; position: relative; overflow: hidden; outline: none; }
-    .project:focus-visible { box-shadow: 0 0 0 3px var(--accent-light); }
+    .project { padding: calc(var(--spacing-unit) * 1.25); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); cursor: pointer; position: relative; overflow: hidden; outline: none; }
+    .project:focus-visible { box-shadow: 0 0 0 3px var(--accent-light); }
 
-    .project::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: translateX(-100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .project:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1); }
-    .project:hover::before { transform: translateX(0); }
+    .project::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent); transform: translateX(-100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .project:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1); }
+    .project:hover::before { transform: translateX(0); }
 
-    .project h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; }
-    .project .tech-stack { font-family: var(--sans); font-size: 0.778rem; color: var(--secondary); letter-spacing: 0.02em; margin-bottom: 0.8rem; }
-    .project p { font-size: 0.944rem; line-height: 1.6; color: var(--secondary); }
+    .project h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; }
+    .project .tech-stack { font-family: var(--sans); font-size: 0.778rem; color: var(--secondary); letter-spacing: 0.02em; margin-bottom: 0.8rem; }
+    .project p { font-size: 0.944rem; line-height: 1.6; color: var(--secondary); }
 
-    /* Project modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .modal {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: calc(var(--spacing-unit) * 2);
-      max-width: 90vw;
-      width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
-      border: 1px solid var(--border);
-    }
-    .modal-overlay.active .modal {
-      transform: translateY(0);
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--secondary);
-      transition: var(--transition);
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-    }
-    .modal-close:hover {
-      background: var(--accent-light);
-      color: var(--accent);
-    }
-    .modal h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      padding-right: 2rem;
-    }
-    .modal .tech-stack {
-      font-family: var(--sans);
-      font-size: 0.889rem;
-      color: var(--secondary);
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .modal p {
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-    .modal-links {
-      display: flex;
-      gap: 1rem;
-    }
-    .modal-link {
-      font-family: var(--sans);
-      font-size: 0.889rem;
-      color: var(--accent);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--accent);
-      border-radius: var(--radius);
-      transition: var(--transition);
-      display: inline-flex; /* <-- ADDED THIS LINE */
-    }
-    .modal-link:hover {
-      background: var(--accent);
-      color: white;
-    }
+    /* Project modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: calc(var(--spacing-unit) * 2);
+      max-width: 90vw;
+      width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      border: 1px solid var(--border);
+    }
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--secondary);
+      transition: var(--transition);
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-close:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    .modal h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-right: 2rem;
+    }
+    .modal .tech-stack {
+      font-family: var(--sans);
+      font-size: 0.889rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .modal-links {
+      display: flex;
+      gap: 1rem;
+    }
+    .modal-link {
+      font-family: var(--sans);
+      font-size: 0.889rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+    .modal-link:hover {
+      background: var(--accent);
+      color: white;
+    }
 
-    /* Skills list */
-    .skills-list { display: flex; flex-wrap: wrap; gap: calc(var(--spacing-unit) * 0.5); margin-top: var(--spacing-unit); }
-    .skill-tag { padding: 0.3rem 0.8rem; background: transparent; border: 1px solid var(--border); border-radius: 20px; font-family: var(--sans); font-size: 0.778rem; font-weight: 500; letter-spacing: 0.02em; transition: var(--transition); position: relative; overflow: hidden; cursor: pointer; }
-    .skill-tag::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); transition: left 0.3s ease; z-index: -1; }
-    .skill-tag:hover { color: var(--bg); border-color: var(--accent); }
-    .skill-tag:hover::before { left: 0; }
+    /* Skills list */
+    .skills-list { display: flex; flex-wrap: wrap; gap: calc(var(--spacing-unit) * 0.5); margin-top: var(--spacing-unit); }
+    .skill-tag { padding: 0.3rem 0.8rem; background: transparent; border: 1px solid var(--border); border-radius: 20px; font-family: var(--sans); font-size: 0.778rem; font-weight: 500; letter-spacing: 0.02em; transition: var(--transition); position: relative; overflow: hidden; cursor: pointer; }
+    .skill-tag::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); transition: left 0.3s ease; z-index: -1; }
+    .skill-tag:hover { color: var(--bg); border-color: var(--accent); }
+    .skill-tag:hover::before { left: 0; }
 
-    /* Contact */
-    .contact-links { display: flex; gap: calc(var(--spacing-unit) * 1.25); margin-top: var(--spacing-unit); flex-wrap: wrap; }
-    .contact-links a { font-family: var(--sans); font-size: 0.889rem; color: var(--primary); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid var(--border); transition: var(--transition); }
-    .contact-links a:hover { color: var(--accent); border-color: var(--accent); }
+    /* Contact */
+    .contact-links { display: flex; gap: calc(var(--spacing-unit) * 1.25); margin-top: var(--spacing-unit); flex-wrap: wrap; }
+    .contact-links a { font-family: var(--sans); font-size: 0.889rem; color: var(--primary); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid var(--border); transition: var(--transition); }
+    .contact-links a:hover { color: var(--accent); border-color: var(--accent); }
 
-    footer { border-top: 1px solid var(--border); padding: calc(var(--spacing-unit) * 2) 0; font-family: var(--sans); font-size: 0.778rem; color: var(--secondary); text-align: center; letter-spacing: 0.02em; }
+    footer { border-top: 1px solid var(--border); padding: calc(var(--spacing-unit) * 2) 0; font-family: var(--sans); font-size: 0.778rem; color: var(--secondary); text-align: center; letter-spacing: 0.02em; }
 
-    /* Back to top button */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 3rem;
-      height: 3rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-      z-index: 99;
-    }
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .back-to-top:hover {
-      border-color: var(--accent);
-s     background: var(--accent-light);
-    }
-    .back-to-top svg {
-      width: 1.2rem;
-      height: 1.2rem;
-      fill: var(--primary);
-    }
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3rem;
+      height: 3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 99;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .back-to-top svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: var(--primary);
+    }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      html { font-size: 16px; }
-      h1 { font-size: 2rem; }
-      .masthead { flex-direction: column; gap: var(--spacing-unit); }
-      nav[aria-label] { justify-content: space-between; }
-      .back-to-top { bottom: 1rem; right: 1rem; }
-    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      h1 { font-size: 2rem; }
+      .masthead { flex-direction: column; gap: var(--spacing-unit); }
+      nav[aria-label] { justify-content: space-between; }
+      .back-to-top { bottom: 1rem; right: 1rem; }
+    }
 
-    /* Print */
-    @media print { #webgl-canvas, .noise-overlay, .loading, .theme-toggle, .back-to-top { display: none; } }
+    /* Print */
+    @media print { #webgl-canvas, .noise-overlay, .loading, .theme-toggle, .back-to-top { display: none; } }
 
-    /* Loading */
-    .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s ease; }
-    .loading.hidden { opacity: 0; pointer-events: none; }
-    .loading-text { font-family: var(--sans); font-size: 0.889rem; letter-spacing: 0.1em; animation: pulse 1.5s ease infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    /* Loading */
+    .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s ease; }
+    .loading.hidden { opacity: 0; pointer-events: none; }
+    .loading-text { font-family: var(--sans); font-size: 0.889rem; letter-spacing: 0.1em; animation: pulse 1.5s ease infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; } #webgl-canvas { display: none; } }
-  </style>
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; } #webgl-canvas { display: none; } }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="loading" id="loading"><div class="loading-text">LOADING</div></div>
+  <!-- Loading screen -->
+  <div class="loading" id="loading"><div class="loading-text">LOADING</div></div>
 
-    <canvas id="webgl-canvas"></canvas>
-  <div class="noise-overlay" aria-hidden="true"></div>
+  <!-- WebGL Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+  <div class="noise-overlay" aria-hidden="true"></div>
 
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24">
-      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
-    </svg>
-  </button>
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24">
+      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+    </svg>
+  </button>
 
-  <div class="container">
-    <header>
-      <div class="masthead">
-        <h1>Brice Allen</h1>
-        <div class="tagline">DEVELOPER & DIGITAL CRAFTSMAN</div>
-      </div>
-      <nav aria-label="Primary">
-        <a href="#work" data-section="work">Work</a>
-        <a href="#about" data-section="about">About</a>
-        <a href="#skills" data-section="skills">Skills</a>
-        <a href="#contact" data-section="contact">Contact</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-Open      <svg class="sun-icon" viewBox="0 0 24 24">
-            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3s3-1.34,3-3 S13.66,9,12,9z M12,4L12,4c0.55,0,1-0.45,1-1V1c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,3.55,11.45,4,12,4z M12,20L12,20 c0.55,0,1-0.45,1-1v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,19.55,11.45,20,12,20z M5,12L5,12c0,0.55,0.45,1,1,1h2 c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H6C5.45,11,5,11.45,5,12z M19,12L19,12c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2C19.45,11,19,11.45,19,12z M6.34,6.34L6.34,6.34c0.39,0.39,1.02,0.39,1.41,0l1.41-1.41 c0.39-0.39,0.39-1.02,0-1.41l0,0c-0.39-0.39-1.02-0.39-1.41,0L6.34,4.93C5.95,5.32,5.95,5.95,6.34,6.34z M17.66,17.66L17.66,17.66 c-0.39,0.39-1.02,0.39-1.41,0l-1.41-1.41c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0l1.41,1.41 C18.05,16.64,18.05,17.27,17.66,17.66z M4.93,17.66L4.93,17.66c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41c0.39-0.39,1.02-0.39,1.41,0 l0,0c0.39,0.39,0.39,1.02,0,1.41L6.34,17.66C5.95,18.05,5.32,18.05,4.93,17.66z M19.07,6.34L19.07,6.34c0.39,0.39,0.39,1.02,0,1.41 l-1.41,1.41c-0.39-0.39-1.02-0.39-1.41,0l0,0c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41C18.05,5.95,18.68,5.95,19.07,6.34z"></path>
-          </svg>
-          <svg class="moon-icon" viewBox="0 0 24 24" style="display: none;">
-            <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
-          </svg>
-        </button>
-      </nav>
-    </header>
+  <div class="container">
+    <header>
+      <div class="masthead">
+        <h1>Brice Allen</h1>
+        <div class="tagline">DEVELOPER & DIGITAL CRAFTSMAN</div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#work" data-section="work">Work</a>
+        <a href="#about" data-section="about">About</a>
+        <a href="#skills" data-section="skills">Skills</a>
+        <a href="#contact" data-section="contact">Contact</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" viewBox="0 0 24 24">
+            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3s3-1.34,3-3 S13.66,9,12,9z M12,4L12,4c0.55,0,1-0.45,1-1V1c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,3.55,11.45,4,12,4z M12,20L12,20 c0.55,0,1-0.45,1-1v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,19.55,11.45,20,12,20z M5,12L5,12c0,0.55,0.45,1,1,1h2 c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H6C5.45,11,5,11.45,5,12z M19,12L19,12c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2C19.45,11,19,11.45,19,12z M6.34,6.34L6.34,6.34c0.39,0.39,1.02,0.39,1.41,0l1.41-1.41 c0.39-0.39,0.39-1.02,0-1.41l0,0c-0.39-0.39-1.02-0.39-1.41,0L6.34,4.93C5.95,5.32,5.95,5.95,6.34,6.34z M17.66,17.66L17.66,17.66 c-0.39,0.39-1.02,0.39-1.41,0l-1.41-1.41c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0l1.41,1.41 C18.05,16.64,18.05,17.27,17.66,17.66z M4.93,17.66L4.93,17.66c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41c0.39-0.39,1.02-0.39,1.41,0 l0,0c0.39,0.39,0.39,1.02,0,1.41L6.34,17.66C5.95,18.05,5.32,18.05,4.93,17.66z M19.07,6.34L19.07,6.34c0.39,0.39,0.39,1.02,0,1.41 l-1.41,1.41c-0.39,0.39-1.02,0.39-1.41,0l0,0c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41C18.05,5.95,18.68,5.95,19.07,6.34z"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
 
-    <main id="main">
-      <section class="hero">
-        <h2>Quiet, durable software where design and systems share a table.</h2>
-        <p>
-          <span class="drop-cap">I</span> make web applications, home servers, and sound tools that behave.
-          Plain surfaces, patient internals. I prefer architectures that explain themselves,
-          interfaces with the hush of late rooms, and code that ages without complaint.
-        </p>
-      </section>
+    <main id="main">
+      <section class="hero">
+        <h2>Quiet, durable software where design and systems share a table.</h2>
+        <p>
+          <span class="drop-cap">I</span> make web applications, home servers, and sound tools that behave.
+          Plain surfaces, patient internals. I prefer architectures that explain themselves,
+          interfaces with the hush of late rooms, and code that ages without complaint.
+        </p>
+      </section>
 
-      <section id="work">
-        <h2>Selected Work</h2>
-        <div class="projects-grid">
-          <article class="project" data-project="unraid-homelab" role="button" tabindex="0">
-            <h3>Unraid Homelab — Observed, Segmentable, and Kind</h3>
-            <div class="tech-stack">Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana</div>
-            <p>
-              Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default),
-              SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a <em>stack‑health</em>
-              script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports.
-              Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.
-            </p>
-          </article>
+      <section id="work">
+        <h2>Selected Work</h2>
+        <div class="projects-grid">
+          <article class="project" data-project="unraid-homelab" role="button" tabindex="0">
+            <h3>Unraid Homelab — Observed, Segmentable, and Kind</h3>
+            <div class="tech-stack">Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana</div>
+            <p>
+              Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default),
+              SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a <em>stack‑health</em>
+              script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports.
+              Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.
+            </p>
+          </article>
 
-          <article class="project" data-project="thick-pigeon" role="button" tabindex="0">
-            <h3>THICK PIGEON — Multiplayer Feeding Arena (Web)</h3>
-            <div class="tech-stack">Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker</div>
-            <p>
-              A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser.
-              Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions.
-              Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.
-section       </p>
-          </article>
+          <article class="project" data-project="thick-pigeon" role="button" tabindex="0">
+            <h3>THICK PIGEON — Multiplayer Feeding Arena (Web)</h3>
+            <div class="tech-stack">Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker</div>
+            <p>
+              A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser.
+              Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions.
+              Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.
+            </p>
+          </article>
 
-          <article class="project" data-project="cryptkeys" role="button" tabindex="0">
-S         <h3>cryptkeys.rip — Ghosts from Structure</h3>
-            <div class="tech-stack">Python • DSP • Feature Extraction • Generative Audio • CLI Tooling</div>
-            <p>
-              An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new,
-s           abstracted compositions. Includes <em>Crypt Mortician</em>, a CLI that oversees the lifecycle of <code>.crypt</code> files:
-              scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The <em>Crypt Resurrector</em> rebuilds
-              ghostly signals from stored features with optional reverb/noise atmospherics.
-            </p>
-          </article>
+          <article class="project" data-project="cryptkeys" role="button" tabindex="0">
+            <h3>cryptkeys.rip — Ghosts from Structure</h3>
+            <div class="tech-stack">Python • DSP • Feature Extraction • Generative Audio • CLI Tooling</div>
+            <p>
+              An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new,
+              abstracted compositions. Includes <em>Crypt Mortician</em>, a CLI that oversees the lifecycle of <code>.crypt</code> files:
+              scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The <em>Crypt Resurrector</em> rebuilds
+              ghostly signals from stored features with optional reverb/noise atmospherics.
+            </p>
+          </article>
 
-          <article class="project" data-project="design-system" role="button" tabindex="0">
-            <h3>Component & Pattern Library</h3>
-            <div class="tech-stack">TypeScript • React • Storybook • CSS</div>
-            <p>
-              A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect
-              reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.
-            </p>
-          </article>
-        </div>
-      </section>
+          <article class="project" data-project="design-system" role="button" tabindex="0">
+            <h3>Component & Pattern Library</h3>
+            <div class="tech-stack">TypeScript • React • Storybook • CSS</div>
+            <p>
+              A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect
+              reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.
+            </p>
+          </article>
+        </div>
+      </section>
 
-      <section id="about">
-        <h2>About</h2>
-        <p>
-          Developer in Denver, and a Computer Science graduate of the University of Colorado Denver.
-See       My work wanders between infrastructure and light: Unraid stacks, reverse proxies, observability;
-          WebGL scenes, field recordings, and long, unhurried listens.
-        </p>
-        <p>
-          I keep to small, sturdy releases—containers with manners, dashboards that do not flatter,
-          and pages tuned to a good room tone. The aim is steadiness: clear edges, gentle defaults,
-          and tools that leave people unruffled.
-        </p>
-      </section>
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          Developer in Denver, and a Computer Science graduate of the University of Colorado Denver.
+          My work wanders between infrastructure and light: Unraid stacks, reverse proxies, observability;
+          WebGL scenes, field recordings, and long, unhurried listens.
+        </p>
+        <p>
+          I keep to small, sturdy releases—containers with manners, dashboards that do not flatter,
+          and pages tuned to a good room tone. The aim is steadiness: clear edges, gentle defaults,
+          and tools that leave people unruffled.
+        </p>
+      </section>
 
-      <section id="skills">
-        <h2>Technical Expertise</h2>
-        <div class="skills-list">
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Rust (learning)</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Node.js</span>
-s       <span class="skill-tag">WebGL / Three.js</span>
-          <span class="skill-tag">GLSL</span>
-          <span class="skill-tag">WebRTC / PeerJS</span>
-          <span class="skill-tag">GraphQL</span>
-          <span class="skill-tag">PostgreSQL</span>
-  s     <span class="skill-tag">Docker / Compose</span>
-          <span class="skill-tag">Traefik</span>
-          <span class="skill-tag">Authelia</span>
-          <span class="skill-tag">WireGuard (Gluetun)</span>
-s       <span class="skill-tag">AdGuard / Unbound</span>
-          <span class="skill-tag">Prometheus / Grafana</span>
-          <span class="skill-tag">CI/CD</span>
-          <span class="skill-tag">System Design</span>
-        </div>
-      </section>
+      <section id="skills">
+        <h2>Technical Expertise</h2>
+        <div class="skills-list">
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Rust (learning)</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">WebGL / Three.js</span>
+          <span class="skill-tag">GLSL</span>
+          <span class="skill-tag">WebRTC / PeerJS</span>
+          <span class="skill-tag">GraphQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Docker / Compose</span>
+          <span class="skill-tag">Traefik</span>
+          <span class="skill-tag">Authelia</span>
+          <span class="skill-tag">WireGuard (Gluetun)</span>
+          <span class="skill-tag">AdGuard / Unbound</span>
+          <span class="skill-tag">Prometheus / Grafana</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">System Design</span>
+        </div>
+      </section>
 
-      <section id="contact">
-        <h2>Get in Touch</h2>
-        <p>
-          I'm open to collaborations, interesting briefs, and thoughtful technical work. If your project values clarity,
-          careful interfaces, and steady iteration, I'd love to hear from you.
-        </p>
-        <div class="contact-links">
-          <a href="mailto:bk@protonmail.com">Email</a>
-          <a href="https://github.com/brice-allen" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/brice-allen" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="/resume.pdf" download>Download Resume</a>
-        </div>
-      </section>
-    </main>
+      <section id="contact">
+        <h2>Get in Touch</h2>
+        <p>
+          I'm open to collaborations, interesting briefs, and thoughtful technical work. If your project values clarity,
+          careful interfaces, and steady iteration, I'd love to hear from you.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:bk@protonmail.com">Email</a>
+          <a href="https://github.com/brice-allen" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/brice-allen" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="/resume.pdf" download>Download Resume</a>
+        </div>
+      </section>
+    </main>
 
-    <footer>
-      <p>© 2025 Brice Allen. Built quietly in Denver, Colorado.</p>
-    </footer>
-  </div>
+    <footer>
+      <p>© 2025 Brice Allen. Built quietly in Denver, Colorado.</p>
+    </footer>
+  </div>
 
-    <div class="modal-overlay" id="projectModal">
-    <div class="modal">
-      <button class="modal-close" id="modalClose">&times;</button>
-      <h3 id="modalTitle"></h3>
-      <div class="tech-stack" id="modalTech"></div>
-      <p id="modalDescription"></p>
-      <div class="modal-links">
-        <a href="#" class="modal-link" id="modalDemo" target="_blank" rel="noopener noreferrer">Live Demo</a>
-s       <a href="#" class="modal-link" id="modalCode" target="_blank" rel="noopener noreferrer">View Code</a>
-      </div>
-    </div>
-  </div>
+  <!-- Project Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3 id="modalTitle"></h3>
+      <div class="tech-stack" id="modalTech"></div>
+      <p id="modalDescription"></p>
+      <div class="modal-links">
+        <a href="#" class="modal-link" id="modalDemo" target="_blank" rel="noopener noreferrer">Live Demo</a>
+        <a href="#" class="modal-link" id="modalCode" target="_blank" rel="noopener noreferrer">View Code</a>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    // Enhanced WebGL Particle Field Effect
-    class ParticleField {
-      constructor() {
-        this.container = document.getElementById('webgl-canvas');
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.mouseX = 0; this.mouseY = 0; this.targetMouseX = 0; this.targetMouseY = 0;
-        this._paused = false;
-        this.init(); this.createParticles(); this.addEventListeners(); this.animate();
-      }
-      init() {
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 1000);
-        this.camera.position.z = 50;
-        this.renderer = new THREE.WebGLRenderer({ canvas: this.container, alpha: true, antialias: true });
-        this.renderer.setSize(this.width, this.height);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      }
-      createParticles() {
-        const particleCount = 200;
-        const geometry = new THREE.BufferGeometry();
-        const positions = []; const scales = []; const randomness = []; const colors = [];
-        
-        for (let i = 0; i < particleCount; i++) {
-          positions.push(
-            (Math.random() - 0.5) * 120,
-            (Math.random() - 0.5) * 120,
-            (Math.random() - 0.5) * 120
-          );
-          scales.push(Math.random() * 0.8 + 0.2);
-          randomness.push(Math.random(), Math.random(), Math.random());
-          
-          // Add subtle color variation
-          colors.push(
-            0.05 + Math.random() * 0.05,
-            0.05 + Math.random() * 0.05,
-            0.05 + Math.random() * 0.05
-          );
-        }
-        
-        geometry.setAttribute('position', new THREE.Float33BufferAttribute(positions, 3));
-        geometry.setAttribute('scale', new THREE.Float32BufferAttribute(scales, 1));
-        geometry.setAttribute('randomness', new THREE.Float32BufferAttribute(randomness, 3));
-        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        
-        const material = new THREE.ShaderMaterial({
-          uniforms: {
-            time: { value: 0 },
-            mousePosition: { value: new THREE.Vector2(0, 0) }
-          },
-          vertexShader: `
-            attribute float scale;
-            attribute vec3 randomness;
-            attribute vec3 color;
-            uniform float time;
-            uniform vec2 mousePosition;
-            varying float vScale;
-            varying vec3 vColor;
-            
-            void main() {
-              vScale = scale;
-      Details   vColor = color;
-              vec3 pos = position;
-              
-              // More complex movement
-              pos.x += sin(time * randomness.x * 0.8) * 3.0;
-              pos.y += cos(time * randomness.y * 0.8) * 3.0;
-              pos.z += sin(time * randomness.z * 0.8) * 3.0;
-              
-              // Mouse interaction
-              vec2 mouseEffect = mousePosition * 15.0;
-              pos.xy += mouseEffect * 0.2 * randomness.xy;
-s           
-              vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-              gl_PointSize = scale * 180.0 / -mvPosition.z;
-              gl_Position = projectionMatrix * mvPosition;
-            }
-          `,
-    s     fragmentShader: `
-            varying float vScale;
-            varying vec3 vColor;
-            
-            void main() {
-              vec2 c = gl_PointCoord - 0.5;
-              float d = length(c);
-open         float o = smoothstep(0.5, 0.0, d);
-              gl_FragColor = vec4(vColor, o * vScale * 0.3);
-            }
-          `,
-          transparent: true,
-          depthWrite: false,
-          blending: THREE.AdditiveBlending
-        });
-        
-        this.particles = new THREE.Points(geometry, material);
-s       this.scene.add(this.particles);
-      }
-      addEventListeners() {
-        window.addEventListener('resize', () => this.onResize());
-        document.addEventListener('mousemove', (e) => this.onMouseMove(e));
-        document.addEventListener('scroll', () => {
-          const scrolled = window.pageYOffset;
-          const parallaxSpeed = 0.5;
-          this.particles.rotation.y = scrolled * 0.0001;
-          this.particles.position.y = scrolled * parallaxSpeed * 0.01;
-        });
-        document.addEventListener('visibilitychange', () => { this._paused = document.hidden; });
-      }
-      onResize() {
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.camera.aspect = this.width / this.height;
-open     this.camera.updateProjectionMatrix();
-        this.renderer.setSize(this.width, this.height);
-      }
-      onMouseMove(event) {
-        this.targetMouseX = (event.clientX / this.width) - 0.5;
-        this.targetMouseY = (event.clientY / this.height) - 0.5;
-      }
-      animate() {
-        requestAnimationFrame(() => this.animate());
-        if (this._paused) return;
-        
-        this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
-        this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
-        
-        this.particles.material.uniforms.time.value += 0.01;
-        this.particles.material.uniforms.mousePosition.value.set(this.mouseX, -this.mouseY);
-        
-        this.particles.rotation.x += 0.0005;
-        this.particles.rotation.y += 0.0003;
-        
-        this.renderer.render(this.scene, this.camera);
-      }
-    }
+  <!-- Three.js for WebGL effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Enhanced WebGL Particle Field Effect
+    class ParticleField {
+      constructor() {
+        this.container = document.getElementById('webgl-canvas');
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.mouseX = 0; this.mouseY = 0; this.targetMouseX = 0; this.targetMouseY = 0;
+        this._paused = false;
+        this.init(); this.createParticles(); this.addEventListeners(); this.animate();
+      }
+      init() {
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 1000);
+        this.camera.position.z = 50;
+        this.renderer = new THREE.WebGLRenderer({ canvas: this.container, alpha: true, antialias: true });
+        this.renderer.setSize(this.width, this.height);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
+      createParticles() {
+        const particleCount = 200;
+        const geometry = new THREE.BufferGeometry();
+        const positions = []; const scales = []; const randomness = []; const colors = [];
+        
+        for (let i = 0; i < particleCount; i++) {
+          positions.push(
+            (Math.random() - 0.5) * 120,
+            (Math.random() - 0.5) * 120,
+            (Math.random() - 0.5) * 120
+          );
+          scales.push(Math.random() * 0.8 + 0.2);
+          randomness.push(Math.random(), Math.random(), Math.random());
+          
+          // Add subtle color variation
+          colors.push(
+            0.05 + Math.random() * 0.05,
+            0.05 + Math.random() * 0.05,
+            0.05 + Math.random() * 0.05
+          );
+        }
+        
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('scale', new THREE.Float32BufferAttribute(scales, 1));
+        geometry.setAttribute('randomness', new THREE.Float32BufferAttribute(randomness, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        
+        const material = new THREE.ShaderMaterial({
+          uniforms: {
+            time: { value: 0 },
+            mousePosition: { value: new THREE.Vector2(0, 0) }
+          },
+          vertexShader: `
+            attribute float scale;
+            attribute vec3 randomness;
+            attribute vec3 color;
+            uniform float time;
+            uniform vec2 mousePosition;
+            varying float vScale;
+            varying vec3 vColor;
+            
+            void main() {
+              vScale = scale;
+              vColor = color;
+              vec3 pos = position;
+              
+              // More complex movement
+              pos.x += sin(time * randomness.x * 0.8) * 3.0;
+              pos.y += cos(time * randomness.y * 0.8) * 3.0;
+              pos.z += sin(time * randomness.z * 0.8) * 3.0;
+              
+              // Mouse interaction
+              vec2 mouseEffect = mousePosition * 15.0;
+              pos.xy += mouseEffect * 0.2 * randomness.xy;
+              
+              vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+              gl_PointSize = scale * 180.0 / -mvPosition.z;
+              gl_Position = projectionMatrix * mvPosition;
+            }
+          `,
+          fragmentShader: `
+            varying float vScale;
+            varying vec3 vColor;
+            
+            void main() {
+              vec2 c = gl_PointCoord - 0.5;
+              float d = length(c);
+              float o = smoothstep(0.5, 0.0, d);
+              gl_FragColor = vec4(vColor, o * vScale * 0.3);
+            }
+          `,
+          transparent: true,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending
+        });
+        
+        this.particles = new THREE.Points(geometry, material);
+        this.scene.add(this.particles);
+      }
+      addEventListeners() {
+        window.addEventListener('resize', () => this.onResize());
+        document.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        document.addEventListener('scroll', () => {
+          const scrolled = window.pageYOffset;
+          const parallaxSpeed = 0.5;
+          this.particles.rotation.y = scrolled * 0.0001;
+          this.particles.position.y = scrolled * parallaxSpeed * 0.01;
+        });
+        document.addEventListener('visibilitychange', () => { this._paused = document.hidden; });
+      }
+      onResize() {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.camera.aspect = this.width / this.height;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(this.width, this.height);
+      }
+      onMouseMove(event) {
+        this.targetMouseX = (event.clientX / this.width) - 0.5;
+        this.targetMouseY = (event.clientY / this.height) - 0.5;
+      }
+      animate() {
+        requestAnimationFrame(() => this.animate());
+        if (this._paused) return;
+        
+        this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
+        this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
+        
+        this.particles.material.uniforms.time.value += 0.01;
+        this.particles.material.uniforms.mousePosition.value.set(this.mouseX, -this.mouseY);
+        
+        this.particles.rotation.x += 0.0005;
+        this.particles.rotation.y += 0.0003;
+        
+        this.renderer.render(this.scene, this.camera);
+      }
+    }
 
-    // Enhanced functionality
-    document.addEventListener('DOMContentLoaded', () => {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      // Initialize particle field only if motion is okay
-      let particleField = null;
-      if (!prefersReduced) particleField = new ParticleField();
+    // Enhanced functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      // Initialize particle field only if motion is okay
+      let particleField = null;
+      if (!prefersReduced) particleField = new ParticleField();
 
-      // Remove loading screen
-      setTimeout(() => {
-        document.getElementById('loading').classList.add('hidden');
-      }, 800);
+      // Remove loading screen
+      setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+      }, 800);
 
-      // Intersection Observer — play section fade-ins and update nav state
-      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
-s     const sections = document.querySelectorAll('main section');
-      const navLinks = Array.from(document.querySelectorAll('nav[aria-label] a'));
+      // Intersection Observer — play section fade-ins and update nav state
+      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+      const sections = document.querySelectorAll('main section');
+      const navLinks = Array.from(document.querySelectorAll('nav[aria-label] a'));
 
-      const setActive = (id) => {
-        navLinks.forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + id)));
-open   };
+      const setActive = (id) => {
+        navLinks.forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + id)));
+      };
 
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-            setActive(entry.target.id);
-          }
-        });
-      }, observerOptions);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            setActive(entry.target.id);
+          }
+        });
+      }, observerOptions);
 
-      sections.forEach(section => {
-        section.style.animationPlayState = 'paused';
-        io.observe(section);
-      });
+      sections.forEach(section => {
+        section.style.animationPlayState = 'paused';
+        io.observe(section);
+      });
 
-      // Project modal functionality
-      const modal = document.getElementById('projectModal');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalTech = document.getElementById('modalTech');
-      const modalDescription = document.getElementById('modalDescription');
-      const modalDemo = document.getElementById('modalDemo');
-      const modalCode = document.getElementById('modalCode');
-      const modalClose = document.getElementById('modalClose');
-      
-      // Project data
-      const projectData = {
-        'unraid-homelab': {
-          title: 'Unraid Homelab — Observed, Segmentable, and Kind',
-see       tech: 'Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana',
-          description: 'Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default), SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a stack‑health script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports. Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.',
-          demo: '#',
-          code: '#'
-        },
-        'thick-pigeon': {
-          title: 'THICK PIGEON — Multiplayer Feeding Arena (Web)',
-          tech: 'Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker',
-          description: 'A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser. Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions. Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.',
-s         demo: '#',
-          code: '#'
-        },
-        'cryptkeys': {
-          title: 'cryptkeys.rip — Ghosts from Structure',
-          tech: 'Python • DSP • Feature Extraction • Generative Audio • CLI Tooling',
-          description: 'An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new, abstracted compositions. Includes Crypt Mortician, a CLI that oversees the lifecycle of .crypt files: scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The Crypt Resurrector rebuilds ghostly signals from stored features with optional reverb/noise atmospherics.',
-          demo: '#',
-          code: '#'
-        },
-        'design-system': {
-          title: 'Component & Pattern Library',
-          tech: 'TypeScript • React • Storybook • CSS',
-          description: 'A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.',
-          demo: '#',
-          code: '#'
-        }
-    Check };
+      // Project modal functionality
+      const modal = document.getElementById('projectModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalTech = document.getElementById('modalTech');
+      const modalDescription = document.getElementById('modalDescription');
+      const modalDemo = document.getElementById('modalDemo');
+      const modalCode = document.getElementById('modalCode');
+      const modalClose = document.getElementById('modalClose');
+      
+      // Project data
+      const projectData = {
+        'unraid-homelab': {
+          title: 'Unraid Homelab — Observed, Segmentable, and Kind',
+          tech: 'Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana',
+          description: 'Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default), SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a stack‑health script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports. Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.',
+          demo: '#',
+          code: '#'
+        },
+        'thick-pigeon': {
+          title: 'THICK PIGEON — Multiplayer Feeding Arena (Web)',
+          tech: 'Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker',
+          description: 'A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser. Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions. Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.',
+          demo: '#',
+          code: '#'
+        },
+        'cryptkeys': {
+          title: 'cryptkeys.rip — Ghosts from Structure',
+          tech: 'Python • DSP • Feature Extraction • Generative Audio • CLI Tooling',
+          description: 'An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new, abstracted compositions. Includes Crypt Mortician, a CLI that oversees the lifecycle of .crypt files: scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The Crypt Resurrector rebuilds ghostly signals from stored features with optional reverb/noise atmospherics.',
+          demo: '#',
+          code: '#'
+        },
+        'design-system': {
+          title: 'Component & Pattern Library',
+          tech: 'TypeScript • React • Storybook • CSS',
+          description: 'A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.',
+          demo: '#',
+          code: '#'
+        }
+      };
 
-      // Project card interactions
-      document.querySelectorAll('.project').forEach(card => {
-        card.addEventListener('click', () => {
-          const projectId = card.dataset.project;
-          const data = projectData[projectId];
-          
-          if (data) {
-            modalTitle.textContent = data.title;
-            modalTech.textContent = data.tech;
-            modalDescription.textContent = data.description;
-            
-            // --- START: Updated Link Logic ---
-s         // Check if the demo link is real
-            if (data.demo && data.demo !== '#') {
-              modalDemo.href = data.demo;
-              modalDemo.style.display = 'inline-flex'; // Show it
-            } else {
-              modalDemo.style.display = 'none'; // Hide it
-s         }
+      // Project card interactions
+      document.querySelectorAll('.project').forEach(card => {
+        card.addEventListener('click', () => {
+          const projectId = card.dataset.project;
+          const data = projectData[projectId];
+          
+          if (data) {
+            modalTitle.textContent = data.title;
+            modalTech.textContent = data.tech;
+            modalDescription.textContent = data.description;
+            modalDemo.href = data.demo;
+            modalCode.href = data.code;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+        
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.click();
+          }
+        });
+      });
 
-            // Check if the code link is real
-            if (data.code && data.code !== '#') {
-              modalCode.href = data.code;
-              modalCode.style.display = 'inline-flex'; // Show it
-s         } else {
-              modalCode.style.display = 'none'; // Hide it
-            }
-            // --- END: Updated Link Logic ---
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-          }
-        });
-        
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            card.click();
-          }
-        });
-      });
+      // Close modal
+      modalClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
 
-      // Close modal
-read   modalClose.addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-      
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      });
-      
-      document.addEventListener('keydown', (e) => {
-Look     if (e.key === 'Escape' && modal.classList.contains('active')) {
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      });
+      // Theme toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const sunIcon = themeToggle.querySelector('.sun-icon');
+      const moonIcon = themeToggle.querySelector('.moon-icon');
+      
+      // Check for saved theme or prefers-color-scheme
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-mode');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+      
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
+          localStorage.setItem('theme', 'dark');
+          sunIcon.style.display = 'none';
+          moonIcon.style.display = 'block';
+        } else {
+          localStorage.setItem('theme', 'light');
+          sunIcon.style.display = 'block';
+          moonIcon.style.display = 'none';
+        }
+      });
 
-      // Theme toggle
-      const themeToggle = document.getElementById('themeToggle');
-      const sunIcon = themeToggle.querySelector('.sun-icon');
-      const moonIcon = themeToggle.querySelector('.moon-icon');
-      
-      // Check for saved theme or prefers-color-scheme
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-s     
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.body.classList.add('dark-mode');
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-      }
-      
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-          localStorage.setItem('theme', 'dark');
-          sunIcon.style.display = 'none';
-          moonIcon.style.display = 'block';
-        } else {
-          localStorage.setItem('theme', 'light');
-          sunIcon.style.display = 'block';
-          moonIcon.style.display = 'none';
-        }
-      });
+      // Back to top button
+      const backToTop = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      });
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
 
-      // Back to top button
-Example   const backToTop = document.getElementById('backToTop');
-      
-      window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-          backToTop.classList.add('visible');
-        } else {
-          backToTop.classList.remove('visible');
-        }
-      });
-      
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      });
+      // Hero micro‑parallax (respects reduced motion)
+      const hero = document.querySelector('.hero h2');
+      let ticking = false;
+      
+      function updateParallax() {
+        const s = window.pageYOffset;
+        if (hero) hero.style.transform = `translateY(${s * 0.3}px)`;
+        ticking = false;
+      }
+      
+      if (!prefersReduced) {
+        document.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        });
+      }
 
-      // Hero micro‑parallax (respects reduced motion)
-S     const hero = document.querySelector('.hero h2');
-      let ticking = false;
-      
-      function updateParallax() {
-        const s = window.pageYOffset;
-        if (hero) hero.style.transform = `translateY(${s * 0.3}px)`;
-s       ticking = false;
-      }
-      
-      if (!prefersReduced) {
-        document.addEventListener('scroll', () => {
-          if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-          }
-        });
-      }
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
 
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href');
-s         const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        });
-s     });
-    });
-
-    // Performance monitoring using Navigation Timing v2
-    if (performance && performance.getEntriesByType) {
-      window.addEventListener('load', () => {
-        const nav = performance.getEntriesByType('navigation')[0];
-        if (nav) {
-          console.log(`%cPage loaded in ${nav.loadEventEnd.toFixed(2)}ms`, 'color:#c9302c;font-weight:bold;');
-Section   performance.getEntriesByType('paint').forEach(m => {
-            console.log(`%c${m.name}: ${m.startTime.toFixed(2)}ms`, 'color:#666;');
-          });
-        }
-      });
-    }
-  </script>
+    // Performance monitoring using Navigation Timing v2
+    if (performance && performance.getEntriesByType) {
+      window.addEventListener('load', () => {
+        const nav = performance.getEntriesByType('navigation')[0];
+        if (nav) {
+          console.log(`%cPage loaded in ${nav.loadEventEnd.toFixed(2)}ms`, 'color:#c9302c;font-weight:bold;');
+          performance.getEntriesByType('paint').forEach(m => {
+            console.log(`%c${m.name}: ${m.startTime.toFixed(2)}ms`, 'color:#666;');
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
