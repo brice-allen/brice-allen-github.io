@@ -68,7 +68,7 @@
     .noise-overlay {
       position: fixed; inset: 0; pointer-events: none; opacity: 0.02; z-index: 2;
       background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjEiIC8+PC9zdmc+');
-    }
+M   }
 
     /* Main container */
     .container { position: relative; z-index: 10; max-width: var(--max-width); margin: 0 auto; padding: 0 calc(var(--spacing-unit) * 1.25); }
@@ -239,7 +239,7 @@
       border: 1px solid var(--accent);
       border-radius: var(--radius);
       transition: var(--transition);
-      display: inline-flex; /* Changed from default */
+      display: inline-flex; /* <-- ADDED THIS LINE */
     }
     .modal-link:hover {
       background: var(--accent);
@@ -285,7 +285,7 @@
     }
     .back-to-top:hover {
       border-color: var(--accent);
-      background: var(--accent-light);
+s     background: var(--accent-light);
     }
     .back-to-top svg {
       width: 1.2rem;
@@ -341,8 +341,8 @@
         <a href="#skills" data-section="skills">Skills</a>
         <a href="#contact" data-section="contact">Contact</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-          <svg class="sun-icon" viewBox="0 0 24 24">
-            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3s3-1.34,3-3 S13.66,9,12,9z M12,4L12,4c0.55,0,1-0.45,1-1V1c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,3.55,11.45,4,12,4z M12,20L12,20 c0.55,0,1-0.45,1-1v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,19.55,11.45,20,12,20z M5,12L5,12c0,0.55,0.45,1,1,1h2 c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H6C5.45,11,5,11.45,5,12z M19,12L19,12c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2C19.45,11,19,11.45,19,12z M6.34,6.34L6.34,6.34c0.39,0.39,1.02,0.39,1.41,0l1.41-1.41 c0.39-0.39,0.39-1.02,0-1.41l0,0c-0.39-0.39-1.02-0.39-1.41,0L6.34,4.93C5.95,5.32,5.95,5.95,6.34,6.34z M17.66,17.66L17.66,17.66 c-0.39,0.39-1.02,0.39-1.41,0l-1.41-1.41c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0l1.41,1.41 C18.05,16.64,18.05,17.27,17.66,17.66z M4.93,17.66L4.93,17.66c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41c0.39-0.39,1.02-0.39,1.41,0 l0,0c0.39,0.39,0.39,1.02,0,1.41L6.34,17.66C5.95,18.05,5.32,18.05,4.93,17.66z M19.07,6.34L19.07,6.34c0.39,0.39,0.39,1.02,0,1.41 l-1.41,1.41c-0.39,0.39-1.02,0.39-1.41,0l0,0c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41C18.05,5.95,18.68,5.95,19.07,6.34z"></path>
+Open      <svg class="sun-icon" viewBox="0 0 24 24">
+            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3s3-1.34,3-3 S13.66,9,12,9z M12,4L12,4c0.55,0,1-0.45,1-1V1c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,3.55,11.45,4,12,4z M12,20L12,20 c0.55,0,1-0.45,1-1v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,19.55,11.45,20,12,20z M5,12L5,12c0,0.55,0.45,1,1,1h2 c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H6C5.45,11,5,11.45,5,12z M19,12L19,12c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2C19.45,11,19,11.45,19,12z M6.34,6.34L6.34,6.34c0.39,0.39,1.02,0.39,1.41,0l1.41-1.41 c0.39-0.39,0.39-1.02,0-1.41l0,0c-0.39-0.39-1.02-0.39-1.41,0L6.34,4.93C5.95,5.32,5.95,5.95,6.34,6.34z M17.66,17.66L17.66,17.66 c-0.39,0.39-1.02,0.39-1.41,0l-1.41-1.41c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0l1.41,1.41 C18.05,16.64,18.05,17.27,17.66,17.66z M4.93,17.66L4.93,17.66c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41c0.39-0.39,1.02-0.39,1.41,0 l0,0c0.39,0.39,0.39,1.02,0,1.41L6.34,17.66C5.95,18.05,5.32,18.05,4.93,17.66z M19.07,6.34L19.07,6.34c0.39,0.39,0.39,1.02,0,1.41 l-1.41,1.41c-0.39-0.39-1.02-0.39-1.41,0l0,0c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41C18.05,5.95,18.68,5.95,19.07,6.34z"></path>
           </svg>
           <svg class="moon-icon" viewBox="0 0 24 24" style="display: none;">
             <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
@@ -382,15 +382,15 @@
               A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser.
               Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions.
               Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.
-            </p>
+section       </p>
           </article>
 
           <article class="project" data-project="cryptkeys" role="button" tabindex="0">
-            <h3>cryptkeys.rip — Ghosts from Structure</h3>
+S         <h3>cryptkeys.rip — Ghosts from Structure</h3>
             <div class="tech-stack">Python • DSP • Feature Extraction • Generative Audio • CLI Tooling</div>
             <p>
               An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new,
-              abstracted compositions. Includes <em>Crypt Mortician</em>, a CLI that oversees the lifecycle of <code>.crypt</code> files:
+s           abstracted compositions. Includes <em>Crypt Mortician</em>, a CLI that oversees the lifecycle of <code>.crypt</code> files:
               scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The <em>Crypt Resurrector</em> rebuilds
               ghostly signals from stored features with optional reverb/noise atmospherics.
             </p>
@@ -403,16 +403,17 @@
               A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect
               reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.
             </p>
-  _       </div>
+          </article>
+        </div>
       </section>
 
       <section id="about">
         <h2>About</h2>
         <p>
           Developer in Denver, and a Computer Science graduate of the University of Colorado Denver.
-          My work wanders between infrastructure and light: Unraid stacks, reverse proxies, observability;
+See       My work wanders between infrastructure and light: Unraid stacks, reverse proxies, observability;
           WebGL scenes, field recordings, and long, unhurried listens.
-  _       </p>
+        </p>
         <p>
           I keep to small, sturdy releases—containers with manners, dashboards that do not flatter,
           and pages tuned to a good room tone. The aim is steadiness: clear edges, gentle defaults,
@@ -429,17 +430,17 @@
           <span class="skill-tag">Rust (learning)</span>
           <span class="skill-tag">React</span>
           <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">WebGL / Three.js</span>
+s       <span class="skill-tag">WebGL / Three.js</span>
           <span class="skill-tag">GLSL</span>
           <span class="skill-tag">WebRTC / PeerJS</span>
-C <span class="skill-tag">GraphQL</span>
+          <span class="skill-tag">GraphQL</span>
           <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">Docker / Compose</span>
+  s     <span class="skill-tag">Docker / Compose</span>
           <span class="skill-tag">Traefik</span>
           <span class="skill-tag">Authelia</span>
           <span class="skill-tag">WireGuard (Gluetun)</span>
-          <span class="skill-tag">AdGuard / Unbound</span>
-s <span class="skill-tag">Prometheus / Grafana</span>
+s       <span class="skill-tag">AdGuard / Unbound</span>
+          <span class="skill-tag">Prometheus / Grafana</span>
           <span class="skill-tag">CI/CD</span>
           <span class="skill-tag">System Design</span>
         </div>
@@ -447,13 +448,13 @@ s <span class="skill-tag">Prometheus / Grafana</span>
 
       <section id="contact">
         <h2>Get in Touch</h2>
-    Such <p>
+        <p>
           I'm open to collaborations, interesting briefs, and thoughtful technical work. If your project values clarity,
           careful interfaces, and steady iteration, I'd love to hear from you.
         </p>
         <div class="contact-links">
           <a href="mailto:bk@protonmail.com">Email</a>
-Open        <a href="https://github.com/brice-allen" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/brice-allen" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://linkedin.com/in/brice-allen" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="/resume.pdf" download>Download Resume</a>
         </div>
@@ -462,7 +463,7 @@ Open        <a href="https://github.com/brice-allen" target="_blank" rel="no
 
     <footer>
       <p>© 2025 Brice Allen. Built quietly in Denver, Colorado.</p>
-Open  </footer>
+    </footer>
   </div>
 
     <div class="modal-overlay" id="projectModal">
@@ -473,7 +474,7 @@ Open  </footer>
       <p id="modalDescription"></p>
       <div class="modal-links">
         <a href="#" class="modal-link" id="modalDemo" target="_blank" rel="noopener noreferrer">Live Demo</a>
-        <a href="#" class="modal-link" id="modalCode" target="_blank" rel="noopener noreferrer">View Code</a>
+s       <a href="#" class="modal-link" id="modalCode" target="_blank" rel="noopener noreferrer">View Code</a>
       </div>
     </div>
   </div>
@@ -520,7 +521,7 @@ Open  </footer>
           );
         }
         
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('position', new THREE.Float33BufferAttribute(positions, 3));
         geometry.setAttribute('scale', new THREE.Float32BufferAttribute(scales, 1));
         geometry.setAttribute('randomness', new THREE.Float32BufferAttribute(randomness, 3));
         geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
@@ -541,45 +542,45 @@ Open  </footer>
             
             void main() {
               vScale = scale;
-              vColor = color;
+      Details   vColor = color;
               vec3 pos = position;
               
               // More complex movement
               pos.x += sin(time * randomness.x * 0.8) * 3.0;
               pos.y += cos(time * randomness.y * 0.8) * 3.0;
-section         pos.z += sin(time * randomness.z * 0.8) * 3.0;
+              pos.z += sin(time * randomness.z * 0.8) * 3.0;
               
               // Mouse interaction
               vec2 mouseEffect = mousePosition * 15.0;
               pos.xy += mouseEffect * 0.2 * randomness.xy;
-              
+s           
               vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
               gl_PointSize = scale * 180.0 / -mvPosition.z;
               gl_Position = projectionMatrix * mvPosition;
             }
           `,
-          fragmentShader: `
+    s     fragmentShader: `
             varying float vScale;
             varying vec3 vColor;
             
             void main() {
               vec2 c = gl_PointCoord - 0.5;
               float d = length(c);
-              float o = smoothstep(0.5, 0.0, d);
+open         float o = smoothstep(0.5, 0.0, d);
               gl_FragColor = vec4(vColor, o * vScale * 0.3);
             }
           `,
           transparent: true,
-    t     depthWrite: false,
+          depthWrite: false,
           blending: THREE.AdditiveBlending
         });
         
         this.particles = new THREE.Points(geometry, material);
-        this.scene.add(this.particles);
+s       this.scene.add(this.particles);
       }
       addEventListeners() {
         window.addEventListener('resize', () => this.onResize());
-s       document.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        document.addEventListener('mousemove', (e) => this.onMouseMove(e));
         document.addEventListener('scroll', () => {
           const scrolled = window.pageYOffset;
           const parallaxSpeed = 0.5;
@@ -592,7 +593,7 @@ s       document.addEventListener('mousemove', (e) => this.onMouseMove(e));
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.camera.aspect = this.width / this.height;
-        this.camera.updateProjectionMatrix();
+open     this.camera.updateProjectionMatrix();
         this.renderer.setSize(this.width, this.height);
       }
       onMouseMove(event) {
@@ -611,7 +612,7 @@ s       document.addEventListener('mousemove', (e) => this.onMouseMove(e));
         
         this.particles.rotation.x += 0.0005;
         this.particles.rotation.y += 0.0003;
-Open        
+        
         this.renderer.render(this.scene, this.camera);
       }
     }
@@ -627,27 +628,27 @@ Open        
       // Remove loading screen
       setTimeout(() => {
         document.getElementById('loading').classList.add('hidden');
-Open    }, 800);
+      }, 800);
 
       // Intersection Observer — play section fade-ins and update nav state
       const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
-      const sections = document.querySelectorAll('main section');
+s     const sections = document.querySelectorAll('main section');
       const navLinks = Array.from(document.querySelectorAll('nav[aria-label] a'));
 
       const setActive = (id) => {
         navLinks.forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + id)));
-      };
+open   };
 
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.style.animationPlayState = 'running';
-          t setActive(entry.target.id);
+            setActive(entry.target.id);
           }
         });
       }, observerOptions);
 
-s     sections.forEach(section => {
+      sections.forEach(section => {
         section.style.animationPlayState = 'paused';
         io.observe(section);
       });
@@ -665,7 +666,7 @@ s     sections.forEach(section => {
       const projectData = {
         'unraid-homelab': {
           title: 'Unraid Homelab — Observed, Segmentable, and Kind',
-          tech: 'Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana',
+see       tech: 'Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana',
           description: 'Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default), SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a stack‑health script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports. Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.',
           demo: '#',
           code: '#'
@@ -674,29 +675,29 @@ s     sections.forEach(section => {
           title: 'THICK PIGEON — Multiplayer Feeding Arena (Web)',
           tech: 'Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker',
           description: 'A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser. Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions. Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.',
-Do       demo: '#',
+s         demo: '#',
           code: '#'
         },
         'cryptkeys': {
           title: 'cryptkeys.rip — Ghosts from Structure',
-Do       tech: 'Python • DSP • Feature Extraction • Generative Audio • CLI Tooling',
+          tech: 'Python • DSP • Feature Extraction • Generative Audio • CLI Tooling',
           description: 'An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new, abstracted compositions. Includes Crypt Mortician, a CLI that oversees the lifecycle of .crypt files: scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The Crypt Resurrector rebuilds ghostly signals from stored features with optional reverb/noise atmospherics.',
           demo: '#',
           code: '#'
         },
         'design-system': {
           title: 'Component & Pattern Library',
-d         tech: 'TypeScript • React • Storybook • CSS',
+          tech: 'TypeScript • React • Storybook • CSS',
           description: 'A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.',
           demo: '#',
           code: '#'
         }
-      };
+    Check };
 
       // Project card interactions
       document.querySelectorAll('.project').forEach(card => {
         card.addEventListener('click', () => {
-  s       const projectId = card.dataset.project;
+          const projectId = card.dataset.project;
           const data = projectData[projectId];
           
           if (data) {
@@ -705,25 +706,25 @@ d         tech: 'TypeScript • React • Storybook • CSS',
             modalDescription.textContent = data.description;
             
             // --- START: Updated Link Logic ---
-            // Check if the demo link is real
+s         // Check if the demo link is real
             if (data.demo && data.demo !== '#') {
               modalDemo.href = data.demo;
               modalDemo.style.display = 'inline-flex'; // Show it
             } else {
               modalDemo.style.display = 'none'; // Hide it
-t         }
+s         }
 
             // Check if the code link is real
             if (data.code && data.code !== '#') {
               modalCode.href = data.code;
               modalCode.style.display = 'inline-flex'; // Show it
-Open          } else {
+s         } else {
               modalCode.style.display = 'none'; // Hide it
             }
             // --- END: Updated Link Logic ---
             
             modal.classList.add('active');
-We         document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
           }
         });
         
@@ -736,20 +737,20 @@ We         document.body.style.overflow = 'hidden';
       });
 
       // Close modal
-      modalClose.addEventListener('click', () => {
+read   modalClose.addEventListener('click', () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
       });
       
       modal.addEventListener('click', (e) => {
-Open      if (e.target === modal) {
+        if (e.target === modal) {
           modal.classList.remove('active');
           document.body.style.overflow = '';
         }
       });
       
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
+Look     if (e.key === 'Escape' && modal.classList.contains('active')) {
           modal.classList.remove('active');
           document.body.style.overflow = '';
         }
@@ -763,7 +764,7 @@ Open      if (e.target === modal) {
       // Check for saved theme or prefers-color-scheme
       const savedTheme = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
+s     
       if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
         document.body.classList.add('dark-mode');
         sunIcon.style.display = 'none';
@@ -774,13 +775,13 @@ Open      if (e.target === modal) {
       }
       
       themeToggle.addEventListener('click', () => {
-Such     document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('dark-mode');
         
         if (document.body.classList.contains('dark-mode')) {
           localStorage.setItem('theme', 'dark');
           sunIcon.style.display = 'none';
           moonIcon.style.display = 'block';
-Please     } else {
+        } else {
           localStorage.setItem('theme', 'light');
           sunIcon.style.display = 'block';
           moonIcon.style.display = 'none';
@@ -788,10 +789,10 @@ Please     } else {
       });
 
       // Back to top button
-      const backToTop = document.getElementById('backToTop');
+Example   const backToTop = document.getElementById('backToTop');
       
       window.addEventListener('scroll', () => {
-    s   if (window.pageYOffset > 300) {
+        if (window.pageYOffset > 300) {
           backToTop.classList.add('visible');
         } else {
           backToTop.classList.remove('visible');
@@ -802,24 +803,24 @@ Please     } else {
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
-  Such   });
+        });
       });
 
       // Hero micro‑parallax (respects reduced motion)
-      const hero = document.querySelector('.hero h2');
+S     const hero = document.querySelector('.hero h2');
       let ticking = false;
       
       function updateParallax() {
         const s = window.pageYOffset;
         if (hero) hero.style.transform = `translateY(${s * 0.3}px)`;
-        ticking = false;
+s       ticking = false;
       }
       
       if (!prefersReduced) {
-  Access   document.addEventListener('scroll', () => {
+        document.addEventListener('scroll', () => {
           if (!ticking) {
             window.requestAnimationFrame(updateParallax);
-This         ticking = true;
+            ticking = true;
           }
         });
       }
@@ -829,7 +830,7 @@ This         ticking = true;
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const targetId = link.getAttribute('href');
-Look       const targetElement = document.querySelector(targetId);
+s         const targetElement = document.querySelector(targetId);
           
           if (targetElement) {
             targetElement.scrollIntoView({
@@ -838,18 +839,18 @@ Look       const targetElement = document.querySelector(targetId);
             });
           }
         });
-      });
+s     });
     });
 
     // Performance monitoring using Navigation Timing v2
     if (performance && performance.getEntriesByType) {
-  Two window.addEventListener('load', () => {
+      window.addEventListener('load', () => {
         const nav = performance.getEntriesByType('navigation')[0];
-s       if (nav) {
+        if (nav) {
           console.log(`%cPage loaded in ${nav.loadEventEnd.toFixed(2)}ms`, 'color:#c9302c;font-weight:bold;');
-          performance.getEntriesByType('paint').forEach(m => {
+Section   performance.getEntriesByType('paint').forEach(m => {
             console.log(`%c${m.name}: ${m.startTime.toFixed(2)}ms`, 'color:#666;');
-This       });
+          });
         }
       });
     }
