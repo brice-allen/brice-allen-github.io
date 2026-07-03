@@ -465,19 +465,19 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
           <span class="dim">denver, colorado &middot; cs, university of colorado denver &middot; open to interesting work</span>
         </p>
       </div>
-      <button type="button" class="safelight-toggle" id="safelight" aria-pressed="false">
+      <button class="safelight-toggle" id="safelight" aria-pressed="false">
         <span class="lamp" aria-hidden="true"></span><span id="safelightLabel">safelight: off</span>
       </button>
     </div>
 
     <nav class="spool" id="spool" aria-label="Threads — filter and connect the patches">
       <span class="spool-label">pull a thread —</span>
-      <button type="button" class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
-      <button type="button" class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
-      <button type="button" class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
-      <button type="button" class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
-      <button type="button" class="thread-btn" data-thread="time" aria-pressed="false">time</button>
-      <button type="button" class="spool-clear" id="spoolClear">let go (esc)</button>
+      <button class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
+      <button class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
+      <button class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
+      <button class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
+      <button class="thread-btn" data-thread="time" aria-pressed="false">time</button>
+      <button class="spool-clear" id="spoolClear">let go (esc)</button>
     </nav>
   </header>
 
@@ -533,7 +533,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
     </section>
 
     <!-- ~ cryptkeys ~ -->
-    <section class="patch mid" data-threads="sound ghosts time signal">
+    <section class="patch mid" data-threads="sound ghosts time">
       <div class="tags"><button type="button" class="tag" data-t="sound" aria-pressed="false">sound</button><button type="button" class="tag" data-t="ghosts" aria-pressed="false">ghosts</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>cryptkeys.rip — music made of ghosts</h2>
       <p class="meta">python &middot; dsp &middot; fastapi &middot; docker &middot; a graveyard with a ui</p>
@@ -579,8 +579,8 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
     </section>
 
     <!-- ~ nikko ~ -->
-    <section class="patch slim" data-threads="sound repair time ghosts">
-      <div class="tags"><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
+    <section class="patch slim" data-threads="sound repair time">
+      <div class="tags"><button type="button" class="tag" data-t="sound" aria-pressed="false">sound</button><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>nikko trm-800, $10</h2>
       <p class="meta">1977 flagship &middot; dc offset fault &middot; full recap</p>
       <p>
@@ -670,7 +670,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
       <div class="links">
         <a href="mailto:bk@protonmail.com">email &rarr;</a>
         <a href="https://gitlab.com/cacheflowe" target="_blank" rel="noopener">gitlab &rarr;</a>
-        <a href="/resume.pdf">resume (pdf) &rarr;</a>
+        <a href="/resume.pdf" download>resume (pdf) &rarr;</a>
       </div>
     </section>
   </main>
@@ -686,7 +686,6 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
 <script>
 'use strict';
-
 function safe(name, fn, fallback){
   try {
     fn();
@@ -697,12 +696,10 @@ function safe(name, fn, fallback){
     }
   }
 }
-
 function reducedMotion(){
   try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
   catch(e){ return false; }
 }
-
 /* ────────────────────────────────────────────────
    the needle: draws threads through lit patches
    ──────────────────────────────────────────────── */
@@ -801,20 +798,6 @@ safe('needle', function(){
   btns.forEach(b => b.addEventListener('click', () => {
     setThread(active === b.dataset.thread ? null : b.dataset.thread);
   }));
-
-  tagBtns.forEach(t => {
-    t.addEventListener('click', e => {
-      e.stopPropagation();
-      setThread(active === t.dataset.t ? null : t.dataset.t);
-      try {
-        spool.scrollIntoView({
-          block:'nearest',
-          behavior: reduced ? 'auto' : 'smooth'
-        });
-      } catch(e) {}
-    });
-  });
-
   clearBtn.addEventListener('click', () => setThread(null));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setThread(null); });
 
@@ -824,10 +807,28 @@ safe('needle', function(){
     rz = setTimeout(() => { if (active) sew(active); }, 150);
   }, { passive:true });
 
-  // redraw once fonts settle (layout shifts move the anchors)
+  tagBtns.forEach(t => {
+    t.addEventListener('click', e => {
+      e.stopPropagation();
+      setThread(active === t.dataset.t ? null : t.dataset.t);
+      try {
+        spool.scrollIntoView({ block:'nearest', behavior: reduced ? 'auto' : 'smooth' });
+      } catch(_) {}
+    });
+  });
+
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => { if (active) sew(active); });
   }
+
+  // stitch lint: every declared thread should be visible as a tag, and vice versa
+  field.querySelectorAll('.patch[data-threads]').forEach(p => {
+    const declared = p.dataset.threads.split(/\s+/).sort().join(' ');
+    const shown = Array.from(p.querySelectorAll('.tag')).map(t => t.dataset.t).sort().join(' ');
+    if (declared !== shown) {
+      console.warn('loose stitch on "' + (p.querySelector('h2')||{}).textContent + '": data-threads [' + declared + '] vs tags [' + shown + ']');
+    }
+  });
 });
 
 /* ────────────────────────────────────────────────
@@ -836,12 +837,10 @@ safe('needle', function(){
 safe('tray', function(){
   const patches = document.querySelectorAll('.patch');
   const reduced = reducedMotion();
-
   if (reduced || !('IntersectionObserver' in window)){
     patches.forEach(p => p.classList.add('developed'));
     return;
   }
-
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (en.isIntersecting){
@@ -852,7 +851,6 @@ safe('tray', function(){
       }
     });
   }, { threshold: 0.12 });
-
   patches.forEach(p => io.observe(p));
 }, function(){
   document.querySelectorAll('.patch').forEach(p => p.classList.add('developed'));
@@ -871,9 +869,10 @@ safe('safelight', function(){
     document.documentElement.classList.toggle('safelight', on);
     btn.setAttribute('aria-pressed', String(on));
     label.textContent = on ? 'safelight: on' : 'safelight: off';
+    const tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', on ? '#0b0705' : '#131a25');
     if (persist) { try { localStorage.setItem('safelight', on ? '1' : '0'); } catch(e){} }
   }
-
   set(saved === '1', false);
   btn.addEventListener('click', () => {
     set(!document.documentElement.classList.contains('safelight'), true);
@@ -886,7 +885,6 @@ safe('safelight', function(){
 safe('ticker', function(){
   const el = document.getElementById('ticker');
   if (!el) return;
-
   const lines = [
     '[stack-health v17.6] 44/44 containers healthy · dns resolving · vpn egress ok',
     '[borgmatic] nightly archive complete · verified · sleeping until 03:00',
@@ -897,14 +895,11 @@ safe('ticker', function(){
     '[turntable] side B · do not refactor during side B',
     '[sashiko] running stitch, 7px on 9px off · same as the css'
   ];
-
   let i = Math.floor(Math.random() * lines.length);
-
   function tick(){
     el.textContent = lines[i % lines.length];
     i++;
   }
-
   tick();
   setInterval(tick, 6500);
 });
