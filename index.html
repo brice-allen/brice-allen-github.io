@@ -790,7 +790,7 @@ safe('needle', function(){
     t.addEventListener('click', e => {
       e.stopPropagation();
       setThread(active === t.dataset.t ? null : t.dataset.t);
-      document.getElementById('spool').scrollIntoView({ block:'nearest', behavior: reduced ? 'auto' : 'smooth' });
+      try { document.getElementById('spool').scrollIntoView({ block:'nearest', behavior: reduced ? 'auto' : 'smooth' }); } catch(e){}
     });
   });
 });
