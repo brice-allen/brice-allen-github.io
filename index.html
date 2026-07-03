@@ -26,6 +26,10 @@
 <meta property="og:title" content="brice allen — developer / developer">
 <meta property="og:description" content="one compiles. the other gets mixed 1+1 at 20°C.">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#131a25">
+<script>
+try { document.documentElement.classList.add('js'); } catch(e) {}
+</script>
 <style>
 /* ============================================================
    cloth & thread
@@ -172,6 +176,7 @@ html.safelight .safelight-toggle .lamp{background:var(--madder);box-shadow:0 0 8
   letter-spacing:.05em;
   background:none;
   border:none;
+  color:var(--ecru);
   cursor:pointer;
   padding:.35rem .2rem;
   position:relative;
@@ -328,17 +333,24 @@ html.js .patch.developed{opacity:1;filter:none;transition:opacity 1.4s var(--eas
 /* the tags sewn to each patch */
 .tags{position:absolute;top:-.72rem;right:1.4rem;display:flex;gap:.5rem;z-index:2}
 .tag{
+  appearance:none;
+  border-radius:0;
   font-family:var(--mono);
   font-size:.6rem;
+  line-height:1.2;
   letter-spacing:.1em;
   padding:.18rem .55rem;
   background:var(--cloth-deep);
   border:1px dashed var(--stitch);
   color:var(--ecru-dim);
   cursor:pointer;
-  transition:border-color .25s;
+  transition:border-color .25s, color .25s;
 }
-.tag:hover{border-color:currentColor;border-style:solid}
+.tag:hover,
+.tag[aria-pressed="true"]{
+  border-color:currentColor;
+  border-style:solid;
+}
 .tag[data-t="sound"]{color:var(--ochre)}
 .tag[data-t="signal"]{color:var(--denim)}
 .tag[data-t="repair"]{color:var(--madder)}
@@ -441,7 +453,6 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 </style>
 </head>
 <body>
-<script>try{document.documentElement.classList.add('js')}catch(e){}</script>
 <a class="skip" href="#field">skip to the patches</a>
 
 <div class="wrap">
@@ -454,24 +465,24 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
           <span class="dim">denver, colorado &middot; cs, university of colorado denver &middot; open to interesting work</span>
         </p>
       </div>
-      <button class="safelight-toggle" id="safelight" aria-pressed="false">
+      <button type="button" class="safelight-toggle" id="safelight" aria-pressed="false">
         <span class="lamp" aria-hidden="true"></span><span id="safelightLabel">safelight: off</span>
       </button>
     </div>
 
     <nav class="spool" id="spool" aria-label="Threads — filter and connect the patches">
       <span class="spool-label">pull a thread —</span>
-      <button class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
-      <button class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
-      <button class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
-      <button class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
-      <button class="thread-btn" data-thread="time" aria-pressed="false">time</button>
-      <button class="spool-clear" id="spoolClear">let go (esc)</button>
+      <button type="button" class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
+      <button type="button" class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
+      <button type="button" class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
+      <button type="button" class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
+      <button type="button" class="thread-btn" data-thread="time" aria-pressed="false">time</button>
+      <button type="button" class="spool-clear" id="spoolClear">let go (esc)</button>
     </nav>
   </header>
 
   <main class="field" id="field">
-    <svg id="threadLayer" aria-hidden="true"></svg>
+    <svg id="threadLayer" aria-hidden="true" focusable="false"></svg>
 
     <!-- ~ manifesto ~ -->
     <section class="patch manifesto wide">
@@ -491,7 +502,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ tower ~ -->
     <section class="patch mid" data-threads="signal repair">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span><span class="tag" data-t="repair">repair</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="signal" aria-pressed="false">signal</button><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button></div>
       <h2>tower — a house that runs on containers</h2>
       <p class="meta">unraid &middot; 44 containers &middot; traefik + authelia &middot; gluetun/wireguard &middot; adguard &rarr; unbound &middot; borgmatic</p>
       <p>
@@ -510,7 +521,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ stack-health ~ -->
     <section class="patch slim" data-threads="signal repair">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span><span class="tag" data-t="repair">repair</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="signal" aria-pressed="false">signal</button><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button></div>
       <h2>stack-health.sh</h2>
       <p class="meta">bash &middot; v17.6 and counting &middot; proper git history</p>
       <p>
@@ -523,7 +534,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ cryptkeys ~ -->
     <section class="patch mid" data-threads="sound ghosts time signal">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="sound">sound</span><span class="tag" data-t="ghosts">ghosts</span><span class="tag" data-t="time">time</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="sound" aria-pressed="false">sound</button><button type="button" class="tag" data-t="ghosts" aria-pressed="false">ghosts</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>cryptkeys.rip — music made of ghosts</h2>
       <p class="meta">python &middot; dsp &middot; fastapi &middot; docker &middot; a graveyard with a ui</p>
       <p>
@@ -542,7 +553,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ thick pigeon ~ -->
     <section class="patch slim" data-threads="signal">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="signal" aria-pressed="false">signal</button></div>
       <h2>THICK PIGEON</h2>
       <p class="meta">three.js &middot; webrtc/peerjs &middot; node &middot; docker</p>
       <p>
@@ -555,7 +566,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ loudspeakers ~ -->
     <section class="patch mid" data-threads="sound repair">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="sound">sound</span><span class="tag" data-t="repair">repair</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="sound" aria-pressed="false">sound</button><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button></div>
       <h2>loudspeakers, from filament up</h2>
       <p class="meta">3d printing (cf-petg) &middot; acoustic design &middot; crossover work &middot; measurement</p>
       <p>
@@ -569,7 +580,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ nikko ~ -->
     <section class="patch slim" data-threads="sound repair time ghosts">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="repair">repair</span><span class="tag" data-t="time">time</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>nikko trm-800, $10</h2>
       <p class="meta">1977 flagship &middot; dc offset fault &middot; full recap</p>
       <p>
@@ -582,7 +593,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ meshtastic ~ -->
     <section class="patch slim" data-threads="signal">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="signal" aria-pressed="false">signal</button></div>
       <h2>hopgoblin</h2>
       <p class="meta">meshtastic &middot; lora &middot; 900&nbsp;MHz &middot; router node</p>
       <p>
@@ -594,7 +605,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ mends ~ -->
     <section class="patch slim" data-threads="repair time">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="repair">repair</span><span class="tag" data-t="time">time</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="repair" aria-pressed="false">repair</button><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>visible mends</h2>
       <p class="meta">sashiko &middot; boro &middot; the aesthetic of this page</p>
       <p>
@@ -607,7 +618,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ field work ~ -->
     <section class="patch slim" data-threads="time ghosts">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="time">time</span><span class="tag" data-t="ghosts">ghosts</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="time" aria-pressed="false">time</button><button type="button" class="tag" data-t="ghosts" aria-pressed="false">ghosts</button></div>
       <h2>field work</h2>
       <p class="meta">thrift bins &middot; estate sales &middot; dead formats &middot; a darkroom</p>
       <p>
@@ -620,7 +631,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ previous lives ~ -->
     <section class="patch mid" data-threads="time">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="time">time</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="time" aria-pressed="false">time</button></div>
       <h2>previous lives</h2>
       <p class="meta">advanced sommelier track &middot; beverage director, telluride &middot; urban winery, ~25,000 cases</p>
       <p>
@@ -635,7 +646,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ unnamed ~ -->
     <section class="patch slim" data-threads="ghosts">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="ghosts">ghosts</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="ghosts" aria-pressed="false">ghosts</button></div>
       <h2>[unnamed]</h2>
       <p class="meta">ongoing since high school &middot; no link &middot; on purpose</p>
       <p>
@@ -648,7 +659,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
     <!-- ~ contact ~ -->
     <section class="patch contact wide" data-threads="signal">
-      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <div class="tags"><button type="button" class="tag" data-t="signal" aria-pressed="false">signal</button></div>
       <h2>get a thread to me</h2>
       <p>
         open to collaborations and work that values clear edges and patient
@@ -659,7 +670,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
       <div class="links">
         <a href="mailto:bk@protonmail.com">email &rarr;</a>
         <a href="https://gitlab.com/cacheflowe" target="_blank" rel="noopener">gitlab &rarr;</a>
-        <a href="/resume.pdf" download>resume (pdf) &rarr;</a>
+        <a href="/resume.pdf">resume (pdf) &rarr;</a>
       </div>
     </section>
   </main>
@@ -675,11 +686,23 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
 
 <script>
 'use strict';
-function safe(name, fn){ try{ fn(); } catch(e){ console.warn('patch "'+name+'" tore:', e); } }
+
+function safe(name, fn, fallback){
+  try {
+    fn();
+  } catch(e) {
+    console.warn('patch "' + name + '" tore:', e);
+    if (fallback) {
+      try { fallback(); } catch(_) {}
+    }
+  }
+}
+
 function reducedMotion(){
   try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
   catch(e){ return false; }
 }
+
 /* ────────────────────────────────────────────────
    the needle: draws threads through lit patches
    ──────────────────────────────────────────────── */
@@ -688,6 +711,7 @@ safe('needle', function(){
   const svg = document.getElementById('threadLayer');
   const spool = document.getElementById('spool');
   const btns = Array.from(document.querySelectorAll('.thread-btn'));
+  const tagBtns = Array.from(document.querySelectorAll('.tag[data-t]'));
   const clearBtn = document.getElementById('spoolClear');
   const reduced = reducedMotion();
 
@@ -765,6 +789,7 @@ safe('needle', function(){
   function setThread(thread){
     active = thread;
     btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.thread === thread)));
+    tagBtns.forEach(t => t.setAttribute('aria-pressed', String(t.dataset.t === thread)));
     field.querySelectorAll('.patch[data-threads]').forEach(p => {
       p.classList.toggle('lit', !!thread && p.dataset.threads.split(/\s+/).includes(thread));
     });
@@ -776,6 +801,20 @@ safe('needle', function(){
   btns.forEach(b => b.addEventListener('click', () => {
     setThread(active === b.dataset.thread ? null : b.dataset.thread);
   }));
+
+  tagBtns.forEach(t => {
+    t.addEventListener('click', e => {
+      e.stopPropagation();
+      setThread(active === t.dataset.t ? null : t.dataset.t);
+      try {
+        spool.scrollIntoView({
+          block:'nearest',
+          behavior: reduced ? 'auto' : 'smooth'
+        });
+      } catch(e) {}
+    });
+  });
+
   clearBtn.addEventListener('click', () => setThread(null));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setThread(null); });
 
@@ -785,14 +824,10 @@ safe('needle', function(){
     rz = setTimeout(() => { if (active) sew(active); }, 150);
   }, { passive:true });
 
-  // the tags sewn to each patch pull the same threads
-  document.querySelectorAll('.tag[data-t]').forEach(t => {
-    t.addEventListener('click', e => {
-      e.stopPropagation();
-      setThread(active === t.dataset.t ? null : t.dataset.t);
-      try { document.getElementById('spool').scrollIntoView({ block:'nearest', behavior: reduced ? 'auto' : 'smooth' }); } catch(e){}
-    });
-  });
+  // redraw once fonts settle (layout shifts move the anchors)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { if (active) sew(active); });
+  }
 });
 
 /* ────────────────────────────────────────────────
@@ -801,10 +836,12 @@ safe('needle', function(){
 safe('tray', function(){
   const patches = document.querySelectorAll('.patch');
   const reduced = reducedMotion();
+
   if (reduced || !('IntersectionObserver' in window)){
     patches.forEach(p => p.classList.add('developed'));
     return;
   }
+
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (en.isIntersecting){
@@ -815,7 +852,10 @@ safe('tray', function(){
       }
     });
   }, { threshold: 0.12 });
+
   patches.forEach(p => io.observe(p));
+}, function(){
+  document.querySelectorAll('.patch').forEach(p => p.classList.add('developed'));
 });
 
 /* ────────────────────────────────────────────────
@@ -833,6 +873,7 @@ safe('safelight', function(){
     label.textContent = on ? 'safelight: on' : 'safelight: off';
     if (persist) { try { localStorage.setItem('safelight', on ? '1' : '0'); } catch(e){} }
   }
+
   set(saved === '1', false);
   btn.addEventListener('click', () => {
     set(!document.documentElement.classList.contains('safelight'), true);
@@ -845,6 +886,7 @@ safe('safelight', function(){
 safe('ticker', function(){
   const el = document.getElementById('ticker');
   if (!el) return;
+
   const lines = [
     '[stack-health v17.6] 44/44 containers healthy · dns resolving · vpn egress ok',
     '[borgmatic] nightly archive complete · verified · sleeping until 03:00',
@@ -855,11 +897,14 @@ safe('ticker', function(){
     '[turntable] side B · do not refactor during side B',
     '[sashiko] running stitch, 7px on 9px off · same as the css'
   ];
+
   let i = Math.floor(Math.random() * lines.length);
+
   function tick(){
     el.textContent = lines[i % lines.length];
     i++;
   }
+
   tick();
   setInterval(tick, 6500);
 });
