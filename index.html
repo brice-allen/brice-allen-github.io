@@ -1,1531 +1,860 @@
 <!DOCTYPE html>
+<!--
+  ┌─────────────────────────────────────────────────────────┐
+  │                                                         │
+  │   brice allen — developer / developer                   │
+  │                                                         │
+  │   this site has no images. that's not a budget          │
+  │   decision. read the manifesto patch.                   │
+  │                                                         │
+  │   built by hand: one html file, no build step,          │
+  │   no framework, no tracking. the threads are svg        │
+  │   paths computed from patch geometry at runtime.        │
+  │                                                         │
+  │   if you're reading this, we'd probably get along.      │
+  │   bk@protonmail.com                                     │
+  │                                                         │
+  └─────────────────────────────────────────────────────────┘
+-->
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="b-32.ico">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <!-- Primary Meta Tags -->
-  <title>Brice Allen — Developer & Digital Craftsman</title>
-  <meta name="title" content="Brice Allen — Developer & Digital Craftsman">
-  <meta name="description" content="Full-stack developer crafting quiet, durable software and small, humane systems. Specializing in web applications, home servers, and thoughtful interfaces.">
-  <meta name="author" content="Brice Allen">
-  <meta name="keywords" content="developer, full-stack, systems design, web development, React, TypeScript, Docker">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://briceallen.dev/">
-  <meta property="og:title" content="Brice Allen — Developer & Digital Craftsman">
-  <meta property="og:description" content="Full-stack developer crafting quiet, durable software and small, humane systems.">
-  <meta property="og:image" content="https://briceallen.dev/og-image.jpg">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://briceallen.dev/">
-  <meta property="twitter:title" content="Brice Allen — Developer & Digital Craftsman">
-  <meta property="twitter:description" content="Full-stack developer crafting quiet, durable software and small, humane systems.">
-  <meta property="twitter:image" content="https://briceallen.dev/og-image.jpg">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
-  <!-- Fonts - optimized loading -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Preload critical assets -->
-  <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-  
-  <style>
-    /* ==========================================
-       CSS Variables - Book-inspired palette
-       ========================================== */
-    :root {
-      /* Typography */
-      --serif: 'Crimson Text', Georgia, 'Times New Roman', serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      
-      /* Colors - Aged paper and ink */
-      --ink: #2b2621;
-      --ink-light: #5c5651;
-      --ink-lighter: #8e8983;
-      --paper: #f9f8f4;
-      --paper-dark: #f4f2eb;
-      --paper-darker: #ebe8df;
-      --accent: #9c6644;
-      --accent-muted: #b8906f;
-      --accent-subtle: rgba(156, 102, 68, 0.06);
-      
-      /* Layout */
-      --max-width: 680px;
-      --spacing: 1.5rem;
-      --rhythm: 1.618;
-      
-      /* Transitions */
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-      --duration: 320ms;
-      
-      /* Borders */
-      --border-color: #ddd8cc;
-      --radius: 2px;
-    }
-    
-    .dark-mode {
-      --ink: #e8e6e1;
-      --ink-light: #b8b5ad;
-      --ink-lighter: #8e8b83;
-      --paper: #1a1916;
-      --paper-dark: #221f1b;
-      --paper-darker: #2b2723;
-      --accent: #c4926a;
-      --accent-muted: #a07958;
-      --accent-subtle: rgba(196, 146, 106, 0.08);
-      --border-color: #3a352f;
-    }
-    
-    /* ==========================================
-       Reset & Base Styles
-       ========================================== */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html {
-      scroll-behavior: smooth;
-      font-size: 18px;
-      line-height: var(--rhythm);
-      -webkit-text-size-adjust: 100%;
-    }
-    
-    body {
-      font-family: var(--serif);
-      color: var(--ink);
-      background: var(--paper);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      position: relative;
-      overflow-x: hidden;
-      transition: background-color 0.6s var(--ease), color 0.6s var(--ease);
-    }
-    
-    /* ==========================================
-       Accessibility
-       ========================================== */
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      z-index: 10000;
-    }
-    
-    .skip-link:focus {
-      position: fixed;
-      left: 1rem;
-      top: 1rem;
-      width: auto;
-      height: auto;
-      padding: 0.75rem 1rem;
-      background: var(--ink);
-      color: var(--paper);
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-family: var(--sans);
-      font-size: 0.889rem;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      z-index: 9999;
-    }
-    
-    /* Focus styles */
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
-    
-    /* ==========================================
-       WebGL Background
-       ========================================== */
-    #webgl-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.25;
-    }
-    
-    /* Subtle texture overlay */
-    .texture-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.015;
-      z-index: 2;
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuODUiIG51bU9jdGF2ZXM9IjMiIC8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIgLz48L3N2Zz4=');
-    }
-    
-    /* ==========================================
-       Layout
-       ========================================== */
-    .container {
-      position: relative;
-      z-index: 10;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 calc(var(--spacing) * 1.5);
-    }
-    
-    /* ==========================================
-       Header
-       ========================================== */
-    header {
-      padding: calc(var(--spacing) * 3.5) 0 calc(var(--spacing) * 2);
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: calc(var(--spacing) * 2.5);
-    }
-    
-    .masthead {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: var(--spacing);
-      margin-bottom: calc(var(--spacing) * 1.5);
-      flex-wrap: wrap;
-    }
-    
-    h1 {
-      font-size: clamp(2rem, 5vw, 2.618rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      font-style: normal;
-    }
-    
-    .tagline {
-      font-family: var(--sans);
-      font-size: 0.778rem;
-      color: var(--ink-light);
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    
-    /* Navigation */
-    nav[aria-label="Primary"] {
-      display: flex;
-      gap: calc(var(--spacing) * 1.5);
-      font-family: var(--sans);
-      font-size: 0.778rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    
-    nav a {
-      color: var(--ink);
-      text-decoration: none;
-      position: relative;
-      transition: color var(--duration) var(--ease);
-      padding-bottom: 2px;
-    }
-    
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent);
-      transition: width var(--duration) var(--ease);
-    }
-    
-    nav a:hover,
-    nav a:focus-visible {
-      color: var(--accent);
-    }
-    
-    nav a:hover::after {
-      width: 100%;
-    }
-    
-    nav a[aria-current="true"] {
-      color: var(--accent);
-    }
-    
-    /* Theme toggle */
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      width: 2.25rem;
-      height: 2.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all var(--duration) var(--ease);
-      margin-left: auto;
-    }
-    
-    .theme-toggle:hover,
-    .theme-toggle:focus-visible {
-      border-color: var(--accent);
-      background: var(--accent-subtle);
-    }
-    
-    .theme-toggle svg {
-      width: 1.1rem;
-      height: 1.1rem;
-      fill: var(--ink);
-      transition: fill var(--duration) var(--ease);
-    }
-    
-    /* ==========================================
-       Main Content
-       ========================================== */
-    main {
-      padding: calc(var(--spacing) * 2) 0 calc(var(--spacing) * 5);
-      min-height: 60vh;
-    }
-    
-    /* Hero section */
-    .hero {
-      margin-bottom: calc(var(--spacing) * 4);
-      position: relative;
-    }
-    
-    .hero h2 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      font-weight: 400;
-      line-height: 1.4;
-      margin-bottom: calc(var(--spacing) * 1.5);
-      font-style: italic;
-      color: var(--ink);
-    }
-    
-    .hero p {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--ink-light);
-      text-align: justify;
-      hyphens: auto;
-    }
-    
-    /* Drop cap */
-    .drop-cap {
-      float: left;
-      font-size: 4rem;
-      line-height: 0.85;
-      margin: 0.05em 0.15em 0 0;
-      font-weight: 600;
-      color: var(--accent);
-      font-style: normal;
-    }
-    
-    /* ==========================================
-       Sections
-       ========================================== */
-    section {
-      margin-bottom: calc(var(--spacing) * 4);
-      opacity: 0;
-      transform: translateY(15px);
-      animation: fadeInUp 0.7s var(--ease) forwards;
-    }
-    
-    section:nth-of-type(1) { animation-delay: 0.05s; }
-    section:nth-of-type(2) { animation-delay: 0.1s; }
-    section:nth-of-type(3) { animation-delay: 0.15s; }
-    section:nth-of-type(4) { animation-delay: 0.2s; }
-    
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    h2 {
-      font-family: var(--sans);
-      font-size: 0.667rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: calc(var(--spacing) * 1.5);
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-    
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 2rem;
-      height: 1px;
-      background: var(--accent-muted);
-    }
-    
-    section > p {
-      margin-bottom: var(--spacing);
-      line-height: 1.75;
-      text-align: justify;
-      hyphens: auto;
-    }
-    
-    /* ==========================================
-       Projects
-       ========================================== */
-    .projects-grid {
-      display: grid;
-      gap: calc(var(--spacing) * 1.5);
-      margin-top: calc(var(--spacing) * 1.5);
-    }
-    
-    .project {
-      padding: calc(var(--spacing) * 1.5);
-      background: var(--paper-dark);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      transition: all var(--duration) var(--ease);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .project::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--accent);
-      transform: translateX(-100%);
-      transition: transform 0.5s var(--ease);
-    }
-    
-    .project:hover,
-    .project:focus-within {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(43, 38, 33, 0.08);
-      border-color: var(--accent-muted);
-    }
-    
-    .project:hover::before {
-      transform: translateX(0);
-    }
-    
-    .project h3 {
-      font-size: 1.15rem;
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-      line-height: 1.3;
-      color: var(--ink);
-    }
-    
-    .project .tech-stack {
-      font-family: var(--sans);
-      font-size: 0.722rem;
-      color: var(--ink-lighter);
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-    
-    .project p {
-      font-size: 0.944rem;
-      line-height: 1.65;
-      color: var(--ink-light);
-      text-align: left;
-    }
-    
-    .project em {
-      font-style: italic;
-      color: var(--ink);
-    }
-    
-    .project code {
-      font-family: 'Courier New', monospace;
-      font-size: 0.85em;
-      background: var(--accent-subtle);
-      padding: 0.15em 0.35em;
-      border-radius: 2px;
-    }
-    
-    /* ==========================================
-       Modal
-       ========================================== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(43, 38, 33, 0.75);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity var(--duration) var(--ease), visibility var(--duration) var(--ease);
-    }
-    
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .modal {
-      background: var(--paper-dark);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: calc(var(--spacing) * 2);
-      max-width: 90vw;
-      width: 560px;
-      max-height: 85vh;
-      overflow-y: auto;
-      position: relative;
-      transform: translateY(20px) scale(0.95);
-      transition: transform var(--duration) var(--ease);
-      box-shadow: 0 20px 60px rgba(43, 38, 33, 0.2);
-    }
-    
-    .modal-overlay.active .modal {
-      transform: translateY(0) scale(1);
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      font-size: 1.25rem;
-      cursor: pointer;
-      color: var(--ink-light);
-      transition: all var(--duration) var(--ease);
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-    
-    .modal-close:hover,
-    .modal-close:focus-visible {
-      background: var(--accent-subtle);
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    
-    .modal h3 {
-      font-size: 1.35rem;
-      margin-bottom: 1rem;
-      padding-right: 2.5rem;
-      line-height: 1.3;
-      color: var(--ink);
-    }
-    
-    .modal .tech-stack {
-      font-family: var(--sans);
-      font-size: 0.778rem;
-      color: var(--ink-lighter);
-      margin-bottom: 1.25rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border-color);
-      line-height: 1.6;
-    }
-    
-    .modal p {
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-      color: var(--ink-light);
-    }
-    
-    .modal-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    
-    .modal-link {
-      font-family: var(--sans);
-      font-size: 0.778rem;
-      color: var(--accent);
-      text-decoration: none;
-      padding: 0.65rem 1.25rem;
-      border: 1px solid var(--accent);
-      border-radius: var(--radius);
-      transition: all var(--duration) var(--ease);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-    
-    .modal-link:hover,
-    .modal-link:focus-visible {
-      background: var(--accent);
-      color: var(--paper);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(156, 102, 68, 0.2);
-    }
-    
-    /* ==========================================
-       Skills
-       ========================================== */
-    .skills-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: calc(var(--spacing) * 1.25);
-    }
-    
-    .skill-tag {
-      padding: 0.45rem 1rem;
-      background: transparent;
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      font-family: var(--sans);
-      font-size: 0.722rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      transition: all var(--duration) var(--ease);
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-    }
-    
-    .skill-tag::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--accent);
-      transform: translateY(100%);
-      transition: transform var(--duration) var(--ease);
-      z-index: -1;
-    }
-    
-    .skill-tag:hover {
-      color: var(--paper);
-      border-color: var(--accent);
-    }
-    
-    .skill-tag:hover::before {
-      transform: translateY(0);
-    }
-    
-    /* ==========================================
-       Contact
-       ========================================== */
-    .contact-links {
-      display: flex;
-      gap: calc(var(--spacing) * 1.5);
-      margin-top: calc(var(--spacing) * 1.25);
-      flex-wrap: wrap;
-    }
-    
-    .contact-links a {
-      font-family: var(--sans);
-      font-size: 0.833rem;
-      color: var(--ink);
-      text-decoration: none;
-      padding-bottom: 2px;
-      border-bottom: 1px solid var(--border-color);
-      transition: all var(--duration) var(--ease);
-      letter-spacing: 0.02em;
-    }
-    
-    .contact-links a:hover,
-    .contact-links a:focus-visible {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    
-    /* ==========================================
-       Footer
-       ========================================== */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: calc(var(--spacing) * 2.5) 0;
-      font-family: var(--sans);
-      font-size: 0.722rem;
-      color: var(--ink-lighter);
-      text-align: center;
-      letter-spacing: 0.03em;
-    }
-    
-    /* ==========================================
-       Back to Top Button
-       ========================================== */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 2.75rem;
-      height: 2.75rem;
-      background: var(--paper-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all var(--duration) var(--ease);
-      z-index: 99;
-      box-shadow: 0 4px 12px rgba(43, 38, 33, 0.1);
-    }
-    
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .back-to-top:hover,
-    .back-to-top:focus-visible {
-      border-color: var(--accent);
-      background: var(--accent-subtle);
-      transform: translateY(-2px);
-    }
-    
-    .back-to-top svg {
-      width: 1.1rem;
-      height: 1.1rem;
-      fill: var(--ink);
-    }
-    
-    /* ==========================================
-       Loading Screen
-       ========================================== */
-    .loading {
-      position: fixed;
-      inset: 0;
-      background: var(--paper);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      transition: opacity 0.5s var(--ease);
-    }
-    
-    .loading.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    
-    .loading-text {
-      font-family: var(--sans);
-      font-size: 0.778rem;
-      letter-spacing: 0.15em;
-      color: var(--ink-lighter);
-      animation: pulse 1.5s ease infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-    
-    /* ==========================================
-       Responsive Design
-       ========================================== */
-    @media (max-width: 768px) {
-      html {
-        font-size: 17px;
-      }
-      
-      h1 {
-        font-size: 1.75rem;
-      }
-      
-      .masthead {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      nav[aria-label="Primary"] {
-        width: 100%;
-        justify-content: space-between;
-      }
-      
-      .theme-toggle {
-        margin-left: 0;
-      }
-      
-      .back-to-top {
-        bottom: 1.25rem;
-        right: 1.25rem;
-      }
-      
-      .modal {
-        width: 95vw;
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      html {
-        font-size: 16px;
-      }
-      
-      .container {
-        padding: 0 1.25rem;
-      }
-      
-      .drop-cap {
-        font-size: 3rem;
-      }
-    }
-    
-    /* ==========================================
-       Print Styles
-       ========================================== */
-    @media print {
-      #webgl-canvas,
-      .texture-overlay,
-      .loading,
-      .theme-toggle,
-      .back-to-top,
-      .modal-overlay {
-        display: none !important;
-      }
-      
-      body {
-        background: white;
-        color: black;
-      }
-      
-      a {
-        text-decoration: underline;
-      }
-      
-      .project {
-        page-break-inside: avoid;
-      }
-    }
-    
-    /* ==========================================
-       Reduced Motion
-       ========================================== */
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      
-      #webgl-canvas {
-        display: none;
-      }
-    }
-    
-    /* ==========================================
-       High Contrast Mode
-       ========================================== */
-    @media (prefers-contrast: high) {
-      :root {
-        --border-color: #000;
-      }
-      
-      .dark-mode {
-        --border-color: #fff;
-      }
-    }
-  </style>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brice allen — developer / developer</title>
+<meta name="description" content="Denver. Software with patient internals, sound machines, mended things. No images — I think in threads, and so does this site.">
+<meta name="author" content="Brice Allen">
+<meta property="og:title" content="brice allen — developer / developer">
+<meta property="og:description" content="one compiles. the other gets mixed 1+1 at 20°C.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   cloth & thread
+   boro ground · sashiko stitches · safelight for late work
+   ============================================================ */
+:root{
+  --cloth:      #131a25;
+  --cloth-deep: #0e141d;
+  --patch-a:    #1a2433;
+  --patch-b:    #202c3e;
+  --patch-c:    #16202d;
+  --patch-d:    #243448;
+  --ecru:       #e9ddc4;
+  --ecru-dim:   #b6ab93;
+  --ecru-faint: #7d7663;
+  --madder:     #c4553d;
+  --ochre:      #cf9f4e;
+  --sage:       #8fa583;
+  --denim:      #7f9cc0;
+  --stitch:     rgba(233,221,196,.55);
+  --stitch-dim: rgba(233,221,196,.22);
+  --serif: 'Spectral', Georgia, serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --ease: cubic-bezier(.33,.02,.2,1);
+}
 
+/* safelight: the darkroom kind of developer */
+html.safelight{
+  --cloth:      #0b0705;
+  --cloth-deep: #070403;
+  --patch-a:    #150b07;
+  --patch-b:    #1a0d08;
+  --patch-c:    #110905;
+  --patch-d:    #1f100a;
+  --ecru:       #ff8a5e;
+  --ecru-dim:   #c05f3d;
+  --ecru-faint: #7a4630;
+  --madder:     #ff5a3c;
+  --ochre:      #ff8a5e;
+  --sage:       #e06a45;
+  --denim:      #ff9a70;
+  --stitch:     rgba(255,110,70,.5);
+  --stitch-dim: rgba(255,110,70,.18);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cloth);
+  color:var(--ecru);
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:17px;
+  line-height:1.7;
+  overflow-x:hidden;
+  transition:background .7s var(--ease), color .7s var(--ease);
+  /* woven ground: two faint thread directions */
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.012) 3px 4px),
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,.05) 3px 4px),
+    radial-gradient(ellipse 120% 80% at 30% 0%, rgba(127,156,192,.05), transparent 60%);
+}
+html.safelight body{
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,90,60,.015) 3px 4px),
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(0,0,0,.08) 3px 4px);
+}
+
+::selection{background:var(--madder);color:var(--cloth)}
+
+a{color:var(--ecru);text-decoration:none;border-bottom:1px dashed var(--stitch);transition:color .25s,border-color .25s}
+a:hover{color:var(--ochre);border-bottom-style:solid;border-color:var(--ochre)}
+:focus-visible{outline:2px dashed var(--ochre);outline-offset:4px}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:1rem;top:1rem;z-index:999;background:var(--ecru);color:var(--cloth);padding:.6rem 1rem;font-family:var(--mono);font-size:.75rem}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem)}
+
+/* ============================================================
+   masthead
+   ============================================================ */
+header{padding:clamp(3rem,8vh,6rem) 0 2rem}
+.mast{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem}
+h1{
+  font-weight:200;
+  font-size:clamp(2.6rem,7vw,5.2rem);
+  letter-spacing:-.02em;
+  line-height:.95;
+}
+h1 .slash{color:var(--madder);font-style:italic;font-weight:200}
+.subtitle{
+  font-family:var(--mono);
+  font-size:clamp(.72rem,1.4vw,.85rem);
+  font-weight:300;
+  color:var(--ecru-dim);
+  margin-top:1.1rem;
+  letter-spacing:.04em;
+}
+.subtitle b{color:var(--ecru);font-weight:500}
+.subtitle .dim{color:var(--ecru-faint)}
+
+.safelight-toggle{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.08em;
+  background:none;
+  color:var(--ecru-dim);
+  border:1px dashed var(--stitch);
+  padding:.65rem 1.1rem;
+  cursor:pointer;
+  transition:all .3s var(--ease);
+  white-space:nowrap;
+}
+.safelight-toggle:hover{color:var(--madder);border-color:var(--madder)}
+.safelight-toggle .lamp{display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--ecru-faint);margin-right:.6em;transition:background .3s, box-shadow .3s}
+html.safelight .safelight-toggle .lamp{background:var(--madder);box-shadow:0 0 8px var(--madder)}
+
+/* ============================================================
+   thread spool — the navigation
+   ============================================================ */
+.spool{
+  margin:3rem 0 1rem;
+  padding:1.4rem 0 1.6rem;
+  border-top:1px dashed var(--stitch-dim);
+  border-bottom:1px dashed var(--stitch-dim);
+  display:flex;
+  align-items:baseline;
+  gap:1.1rem;
+  flex-wrap:wrap;
+}
+.spool-label{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  color:var(--ecru-faint);
+  text-transform:lowercase;
+  margin-right:.4rem;
+}
+.thread-btn{
+  font-family:var(--mono);
+  font-size:.8rem;
+  font-weight:400;
+  letter-spacing:.05em;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:.35rem .2rem;
+  position:relative;
+  transition:opacity .3s;
+}
+.thread-btn::before{
+  content:'';
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:0;
+  border-bottom:2px dashed currentColor;
+  opacity:.35;
+  transition:opacity .3s;
+}
+.thread-btn:hover::before{opacity:.9}
+.thread-btn[aria-pressed="true"]{font-weight:500}
+.thread-btn[aria-pressed="true"]::before{opacity:1;border-bottom-style:solid}
+.thread-btn[data-thread="sound"]{color:var(--ochre)}
+.thread-btn[data-thread="signal"]{color:var(--denim)}
+.thread-btn[data-thread="repair"]{color:var(--madder)}
+.thread-btn[data-thread="ghosts"]{color:var(--sage)}
+.thread-btn[data-thread="time"]{color:var(--ecru)}
+html.safelight .thread-btn{color:var(--ecru)}
+.spool-clear{
+  font-family:var(--mono);
+  font-size:.7rem;
+  color:var(--ecru-faint);
+  background:none;border:none;cursor:pointer;
+  margin-left:auto;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+  letter-spacing:.08em;
+}
+.spool.active .spool-clear{opacity:1;pointer-events:auto}
+.spool-clear:hover{color:var(--madder)}
+
+/* ============================================================
+   the field of patches
+   ============================================================ */
+.field{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:clamp(1.2rem,2.5vw,2.2rem);
+  padding:3rem 0 5rem;
+}
+#threadLayer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:5;
+  overflow:visible;
+}
+.thread-path{
+  fill:none;
+  stroke-width:1.6;
+  stroke-dasharray:7 9;
+  stroke-linecap:round;
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  animation:stitchcrawl 20s linear infinite;
+}
+.thread-path.on{opacity:.85}
+.thread-knot{opacity:0;transition:opacity .5s var(--ease)}
+.thread-knot.on{opacity:.9}
+@keyframes stitchcrawl{to{stroke-dashoffset:-320}}
+
+/* patch — a piece of cloth sewn on */
+.patch{
+  grid-column:span 3;
+  position:relative;
+  z-index:1;
+  background:var(--patch-a);
+  padding:clamp(1.4rem,2.6vw,2.2rem);
+  border:1px solid rgba(255,255,255,.04);
+  outline:1.5px dashed var(--stitch);
+  outline-offset:-9px;
+  transition:opacity .55s var(--ease), filter .55s var(--ease), transform .55s var(--ease), background .7s;
+  transform:rotate(var(--tilt,0deg));
+}
+.patch:nth-of-type(3n){background:var(--patch-b)}
+.patch:nth-of-type(4n){background:var(--patch-c)}
+.patch:nth-of-type(5n){background:var(--patch-d)}
+.patch:hover{outline-color:var(--ecru)}
+
+/* hand placement */
+.patch:nth-of-type(odd){--tilt:-.35deg}
+.patch:nth-of-type(even){--tilt:.3deg}
+.patch:nth-of-type(3n){--tilt:.55deg}
+.patch:nth-of-type(7n){--tilt:-.6deg}
+
+.patch.wide{grid-column:span 6}
+.patch.mid{grid-column:span 4}
+.patch.slim{grid-column:span 2}
+
+/* corner knots where the patch is tacked down */
+.patch::before,.patch::after{
+  content:'✕';
+  position:absolute;
+  font-size:.6rem;
+  color:var(--stitch);
+  font-family:var(--mono);
+}
+.patch::before{top:4px;left:7px}
+.patch::after{bottom:3px;right:7px}
+
+/* threading state */
+.field.threading .patch{opacity:.14;filter:saturate(.2) blur(.4px)}
+.field.threading .patch.lit{opacity:1;filter:none;transform:rotate(var(--tilt,0deg)) translateY(-3px)}
+
+/* develop-in: patches emerge like paper in the tray */
+.patch{opacity:0;filter:contrast(.05) brightness(1.9);}
+.patch.developed{opacity:1;filter:none;transition:opacity 1.4s var(--ease), filter 1.6s var(--ease), transform .55s var(--ease)}
+.field.threading .patch.developed{transition:opacity .55s var(--ease), filter .55s var(--ease), transform .55s var(--ease)}
+
+/* patch anatomy */
+.patch h2{
+  font-weight:400;
+  font-style:italic;
+  font-size:clamp(1.25rem,2.2vw,1.6rem);
+  line-height:1.25;
+  letter-spacing:-.01em;
+  margin-bottom:.85rem;
+}
+.patch .meta{
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.06em;
+  color:var(--ecru-faint);
+  margin-bottom:1.1rem;
+  line-height:1.9;
+}
+.patch p{
+  font-size:.95rem;
+  color:var(--ecru-dim);
+  margin-bottom:.9rem;
+}
+.patch p:last-child{margin-bottom:0}
+.patch p strong{color:var(--ecru);font-weight:400}
+.patch code{
+  font-family:var(--mono);
+  font-size:.82em;
+  color:var(--ochre);
+  background:rgba(0,0,0,.25);
+  padding:.1em .4em;
+}
+.patch .links{margin-top:1.2rem;display:flex;gap:1.4rem;flex-wrap:wrap}
+.patch .links a{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em}
+
+/* the tags sewn to each patch */
+.tags{position:absolute;top:-.72rem;right:1.4rem;display:flex;gap:.5rem;z-index:2}
+.tag{
+  font-family:var(--mono);
+  font-size:.6rem;
+  letter-spacing:.1em;
+  padding:.18rem .55rem;
+  background:var(--cloth-deep);
+  border:1px dashed var(--stitch);
+  color:var(--ecru-dim);
+}
+.tag[data-t="sound"]{color:var(--ochre)}
+.tag[data-t="signal"]{color:var(--denim)}
+.tag[data-t="repair"]{color:var(--madder)}
+.tag[data-t="ghosts"]{color:var(--sage)}
+.tag[data-t="time"]{color:var(--ecru)}
+
+/* manifesto patch is special: raw cloth, bigger voice */
+.patch.manifesto{
+  background:transparent;
+  outline:none;
+  border:none;
+}
+.patch.manifesto::before,.patch.manifesto::after{content:none}
+.patch.manifesto p{
+  font-size:clamp(1.15rem,2.4vw,1.55rem);
+  font-weight:300;
+  line-height:1.65;
+  color:var(--ecru);
+  max-width:52rem;
+}
+.patch.manifesto p + p{margin-top:1.4rem}
+.patch.manifesto em{color:var(--ochre);font-style:italic}
+.patch.manifesto .aside{
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--ecru-faint);
+  margin-top:2rem;
+  letter-spacing:.06em;
+}
+
+/* redacted lines in the unnamed patch */
+.redact{
+  display:inline-block;
+  background:var(--ecru-faint);
+  color:transparent;
+  border-radius:1px;
+  user-select:none;
+  opacity:.5;
+}
+
+/* contact patch */
+.patch.contact .links a{font-size:.8rem}
+
+/* ============================================================
+   footer + log ticker
+   ============================================================ */
+footer{
+  border-top:1px dashed var(--stitch-dim);
+  padding:2rem 0 3rem;
+  font-family:var(--mono);
+  font-size:.7rem;
+  color:var(--ecru-faint);
+  letter-spacing:.05em;
+}
+.ticker{
+  display:block;
+  margin-bottom:1.2rem;
+  color:var(--ecru-dim);
+  min-height:1.4em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ticker::before{content:'▍ ';color:var(--madder);animation:blink 1.2s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+
+/* ============================================================
+   responsive
+   ============================================================ */
+@media (max-width:900px){
+  .patch, .patch.mid{grid-column:span 6}
+  .patch.slim{grid-column:span 3}
+}
+@media (max-width:600px){
+  .patch.slim{grid-column:span 6}
+  .field{grid-template-columns:1fr;gap:1.6rem}
+  .patch, .patch.wide, .patch.mid, .patch.slim{grid-column:span 1}
+  .tags{right:.9rem}
+}
+
+/* ============================================================
+   reduced motion — the site stays still, threads still work
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .thread-path{animation:none}
+  .patch{opacity:1;filter:none;transition:none}
+  .field.threading .patch{transition:opacity .01ms}
+  .ticker::before{animation:none}
+}
+
+@media print{
+  body{background:#fff;color:#000}
+  .safelight-toggle,.spool,#threadLayer,footer .ticker{display:none}
+  .patch{outline-color:#999;background:#fff;color:#000;break-inside:avoid}
+  .patch p{color:#222}
+  a{color:#000}
+}
+</style>
+</head>
 <body>
-  <!-- Skip navigation for accessibility -->
-  <a class="skip-link" href="#main">Skip to content</a>
-  
-  <!-- Loading screen -->
-  <div class="loading" id="loading" aria-live="polite" aria-busy="true">
-    <div class="loading-text">LOADING</div>
-  </div>
-  
-  <!-- WebGL background -->
-  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
-  <div class="texture-overlay" aria-hidden="true"></div>
-  
-  <!-- Back to top button -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-    </svg>
-  </button>
-  
-  <div class="container">
-    <!-- Header -->
-    <header role="banner">
-      <div class="masthead">
-        <h1>Brice Allen</h1>
-        <div class="tagline">Developer & Digital Craftsman</div>
+<a class="skip" href="#field">skip to the patches</a>
+
+<div class="wrap">
+  <header>
+    <div class="mast">
+      <div>
+        <h1>brice allen<br><span class="slash">developer / developer</span></h1>
+        <p class="subtitle">
+          <b>one compiles.</b> <span class="dim">the other gets mixed 1+1 at 20&deg;C and expires in the tray.</span><br>
+          <span class="dim">denver, colorado &middot; cs, university of colorado denver &middot; open to interesting work</span>
+        </p>
       </div>
-      
-      <nav aria-label="Primary">
-        <a href="#work" data-section="work">Work</a>
-        <a href="#about" data-section="about">About</a>
-        <a href="#skills" data-section="skills">Skills</a>
-        <a href="#contact" data-section="contact">Contact</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
-          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.66,0-3,1.34-3,3s1.34,3,3,3s3-1.34,3-3 S13.66,9,12,9z M12,4L12,4c0.55,0,1-0.45,1-1V1c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,3.55,11.45,4,12,4z M12,20L12,20 c0.55,0,1-0.45,1-1v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v2C11,19.55,11.45,20,12,20z M5,12L5,12c0,0.55,0.45,1,1,1h2 c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H6C5.45,11,5,11.45,5,12z M19,12L19,12c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2C19.45,11,19,11.45,19,12z M6.34,6.34L6.34,6.34c0.39,0.39,1.02,0.39,1.41,0l1.41-1.41 c0.39-0.39,0.39-1.02,0-1.41l0,0c-0.39-0.39-1.02-0.39-1.41,0L6.34,4.93C5.95,5.32,5.95,5.95,6.34,6.34z M17.66,17.66L17.66,17.66 c-0.39,0.39-1.02,0.39-1.41,0l-1.41-1.41c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0l1.41,1.41 C18.05,16.64,18.05,17.27,17.66,17.66z M4.93,17.66L4.93,17.66c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41c0.39-0.39,1.02-0.39,1.41,0 l0,0c0.39,0.39,0.39,1.02,0,1.41L6.34,17.66C5.95,18.05,5.32,18.05,4.93,17.66z M19.07,6.34L19.07,6.34c0.39,0.39,0.39,1.02,0,1.41 l-1.41,1.41c-0.39,0.39-1.02,0.39-1.41,0l0,0c-0.39-0.39-0.39-1.02,0-1.41l1.41-1.41C18.05,5.95,18.68,5.95,19.07,6.34z"/>
-          </svg>
-          <svg class="moon-icon" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
-            <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/>
-          </svg>
-        </button>
-      </nav>
-    </header>
-    
-    <!-- Main content -->
-    <main id="main" role="main">
-      <!-- Hero section -->
-      <section class="hero">
-        <h2>Quiet, durable software where design and systems share a table.</h2>
-        <p>
-          <span class="drop-cap">I</span> make web applications, home servers, and sound tools that behave.
-          Plain surfaces, patient internals. I prefer architectures that explain themselves,
-          interfaces with the hush of late rooms, and code that ages without complaint.
-        </p>
-      </section>
-      
-      <!-- Work section -->
-      <section id="work">
-        <h2>Selected Work</h2>
-        <div class="projects-grid">
-          <article class="project" data-project="unraid-homelab" role="button" tabindex="0" aria-label="View Unraid Homelab project details">
-            <h3>Unraid Homelab — Observed, Segmentable, and Kind</h3>
-            <div class="tech-stack">Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana</div>
-            <p>
-              Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default),
-              SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a <em>stack‑health</em>
-              script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports.
-              Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.
-            </p>
-          </article>
-          
-          <article class="project" data-project="thick-pigeon" role="button" tabindex="0" aria-label="View THICK PIGEON project details">
-            <h3>THICK PIGEON — Multiplayer Feeding Arena (Web)</h3>
-            <div class="tech-stack">Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker</div>
-            <p>
-              A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser.
-              Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions.
-              Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.
-            </p>
-          </article>
-          
-          <article class="project" data-project="cryptkeys" role="button" tabindex="0" aria-label="View cryptkeys.rip project details">
-            <h3>cryptkeys.rip — Ghosts from Structure</h3>
-            <div class="tech-stack">Python • DSP • Feature Extraction • Generative Audio • CLI Tooling</div>
-            <p>
-              An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new,
-              abstracted compositions. Includes <em>Crypt Mortician</em>, a CLI that oversees the lifecycle of <code>.crypt</code> files:
-              scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The <em>Crypt Resurrector</em> rebuilds
-              ghostly signals from stored features with optional reverb/noise atmospherics.
-            </p>
-          </article>
-          
-          
-        </div>
-      </section>
-      
-      <!-- About section -->
-      <section id="about">
-        <h2>About</h2>
-        <p>
-          Developer in Denver, and a Computer Science graduate of the University of Colorado Denver.
-          My work wanders between infrastructure and light: Unraid stacks, reverse proxies, observability;
-          WebGL scenes, field recordings, and long, unhurried listens.
-        </p>
-        <p>
-          I keep to small, sturdy releases—containers with manners, dashboards that do not flatter,
-          and pages tuned to a good room tone. The aim is steadiness: clear edges, gentle defaults,
-          and tools that leave people unruffled.
-        </p>
-      </section>
-      
-      <!-- Skills section -->
-      <section id="skills">
-        <h2>Technical Expertise</h2>
-        <div class="skills-list">
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Rust (learning)</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">WebGL / Three.js</span>
-          <span class="skill-tag">GLSL</span>
-          <span class="skill-tag">WebRTC / PeerJS</span>
-          <span class="skill-tag">GraphQL</span>
-          <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">Docker / Compose</span>
-          <span class="skill-tag">Traefik</span>
-          <span class="skill-tag">Authelia</span>
-          <span class="skill-tag">WireGuard (Gluetun)</span>
-          <span class="skill-tag">AdGuard / Unbound</span>
-          <span class="skill-tag">Prometheus / Grafana</span>
-          <span class="skill-tag">CI/CD</span>
-          <span class="skill-tag">System Design</span>
-        </div>
-      </section>
-      
-      <!-- Contact section -->
-      <section id="contact">
-        <h2>Get in Touch</h2>
-        <p>
-          I'm open to collaborations, interesting briefs, and thoughtful technical work. If your project values clarity,
-          careful interfaces, and steady iteration, I'd love to hear from you.
-        </p>
-        <div class="contact-links">
-          <a href="mailto:bk@protonmail.com">Email</a>
-          <a href="https://github.com/brice-allen" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="/resume.pdf" download>Download Resume</a>
-        </div>
-      </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer role="contentinfo">
-      <p>© 2025 Brice Allen. Built quietly in Denver, Colorado.</p>
-    </footer>
-  </div>
-  
-  <!-- Project Modal -->
-  <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <button class="modal-close" id="modalClose" aria-label="Close modal" type="button">&times;</button>
-      <h3 id="modalTitle"></h3>
-      <div class="tech-stack" id="modalTech"></div>
-      <p id="modalDescription"></p>
-      <div class="modal-links">
-        <a href="#" class="modal-link" id="modalDemo" target="_blank" rel="noopener noreferrer">Live Demo</a>
-        <a href="#" class="modal-link" id="modalCode" target="_blank" rel="noopener noreferrer">View Code</a>
-      </div>
+      <button class="safelight-toggle" id="safelight" aria-pressed="false">
+        <span class="lamp" aria-hidden="true"></span><span id="safelightLabel">safelight: off</span>
+      </button>
     </div>
-  </div>
-  
-  <!-- Three.js for WebGL effects -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  
-  <script>
-    'use strict';
-    
-    // ==========================================
-    // Enhanced WebGL Particle Field Effect
-    // ==========================================
-    class ParticleField {
-      constructor() {
-        this.container = document.getElementById('webgl-canvas');
-        if (!this.container) return;
-        
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.mouseX = 0;
-        this.mouseY = 0;
-        this.targetMouseX = 0;
-        this.targetMouseY = 0;
-        this._paused = false;
-        this._animationId = null;
-        
-        this.init();
-        this.createParticles();
-        this.addEventListeners();
-        this.animate();
-      }
-      
-      init() {
-        try {
-          this.scene = new THREE.Scene();
-          this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 1000);
-          this.camera.position.z = 50;
-          
-          this.renderer = new THREE.WebGLRenderer({
-            canvas: this.container,
-            alpha: true,
-            antialias: true,
-            powerPreference: 'low-power'
-          });
-          
-          this.renderer.setSize(this.width, this.height);
-          this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        } catch (error) {
-          console.error('WebGL initialization failed:', error);
-          this.container.style.display = 'none';
-        }
-      }
-      
-      createParticles() {
-        const particleCount = 150;
-        const geometry = new THREE.BufferGeometry();
-        const positions = [];
-        const scales = [];
-        const randomness = [];
-        const colors = [];
-        
-        for (let i = 0; i < particleCount; i++) {
-          positions.push(
-            (Math.random() - 0.5) * 120,
-            (Math.random() - 0.5) * 120,
-            (Math.random() - 0.5) * 120
-          );
-          scales.push(Math.random() * 0.8 + 0.2);
-          randomness.push(Math.random(), Math.random(), Math.random());
-          colors.push(
-            0.04 + Math.random() * 0.04,
-            0.04 + Math.random() * 0.04,
-            0.04 + Math.random() * 0.04
-          );
-        }
-        
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-        geometry.setAttribute('scale', new THREE.Float32BufferAttribute(scales, 1));
-        geometry.setAttribute('randomness', new THREE.Float32BufferAttribute(randomness, 3));
-        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        
-        const material = new THREE.ShaderMaterial({
-          uniforms: {
-            time: { value: 0 },
-            mousePosition: { value: new THREE.Vector2(0, 0) }
-          },
-          vertexShader: `
-            attribute float scale;
-            attribute vec3 randomness;
-            attribute vec3 color;
-            uniform float time;
-            uniform vec2 mousePosition;
-            varying float vScale;
-            varying vec3 vColor;
-            
-            void main() {
-              vScale = scale;
-              vColor = color;
-              vec3 pos = position;
-              
-              pos.x += sin(time * randomness.x * 0.6) * 2.5;
-              pos.y += cos(time * randomness.y * 0.6) * 2.5;
-              pos.z += sin(time * randomness.z * 0.6) * 2.5;
-              
-              vec2 mouseEffect = mousePosition * 12.0;
-              pos.xy += mouseEffect * 0.15 * randomness.xy;
-              
-              vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-              gl_PointSize = scale * 150.0 / -mvPosition.z;
-              gl_Position = projectionMatrix * mvPosition;
-            }
-          `,
-          fragmentShader: `
-            varying float vScale;
-            varying vec3 vColor;
-            
-            void main() {
-              vec2 c = gl_PointCoord - 0.5;
-              float d = length(c);
-              float o = smoothstep(0.5, 0.0, d);
-              gl_FragColor = vec4(vColor, o * vScale * 0.25);
-            }
-          `,
-          transparent: true,
-          depthWrite: false,
-          blending: THREE.AdditiveBlending
-        });
-        
-        this.particles = new THREE.Points(geometry, material);
-        this.scene.add(this.particles);
-      }
-      
-      addEventListeners() {
-        window.addEventListener('resize', () => this.onResize(), { passive: true });
-        document.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
-        
-        document.addEventListener('scroll', () => {
-          if (!this._paused) {
-            const scrolled = window.pageYOffset;
-            this.particles.rotation.y = scrolled * 0.0001;
-            this.particles.position.y = scrolled * 0.005;
-          }
-        }, { passive: true });
-        
-        document.addEventListener('visibilitychange', () => {
-          this._paused = document.hidden;
-        });
-      }
-      
-      onResize() {
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
-        this.camera.aspect = this.width / this.height;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(this.width, this.height);
-      }
-      
-      onMouseMove(event) {
-        this.targetMouseX = (event.clientX / this.width) - 0.5;
-        this.targetMouseY = (event.clientY / this.height) - 0.5;
-      }
-      
-      animate() {
-        this._animationId = requestAnimationFrame(() => this.animate());
-        
-        if (this._paused || !this.renderer) return;
-        
-        this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
-        this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
-        
-        this.particles.material.uniforms.time.value += 0.008;
-        this.particles.material.uniforms.mousePosition.value.set(this.mouseX, -this.mouseY);
-        
-        this.particles.rotation.x += 0.0003;
-        this.particles.rotation.y += 0.0002;
-        
-        this.renderer.render(this.scene, this.camera);
-      }
-      
-      destroy() {
-        if (this._animationId) {
-          cancelAnimationFrame(this._animationId);
-        }
-        if (this.renderer) {
-          this.renderer.dispose();
-        }
-      }
-    }
-    
-    // ==========================================
-    // Main Application
-    // ==========================================
-    class PortfolioApp {
-      constructor() {
-        this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        this.particleField = null;
-        this.observers = [];
-        
-        this.init();
-      }
-      
-      init() {
-        // Wait for DOM and dependencies
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => this.setup());
-        } else {
-          this.setup();
-        }
-      }
-      
-      setup() {
-        // Initialize WebGL if motion is enabled
-        if (!this.prefersReducedMotion && typeof THREE !== 'undefined') {
-          this.particleField = new ParticleField();
-        }
-        
-        // Remove loading screen
-        this.removeLoadingScreen();
-        
-        // Initialize components
-        this.setupIntersectionObserver();
-        this.setupModal();
-        this.setupThemeToggle();
-        this.setupBackToTop();
-        this.setupSmoothScroll();
-        this.setupParallax();
-        
-        // Performance monitoring (development only)
-        if (window.location.hostname === 'localhost') {
-          this.monitorPerformance();
-        }
-      }
-      
-      removeLoadingScreen() {
-        const loading = document.getElementById('loading');
-        if (loading) {
-          setTimeout(() => {
-            loading.classList.add('hidden');
-            loading.setAttribute('aria-busy', 'false');
-            
-            setTimeout(() => {
-              loading.remove();
-            }, 500);
-          }, 600);
-        }
-      }
-      
-      setupIntersectionObserver() {
-        const sections = document.querySelectorAll('main section');
-        const navLinks = Array.from(document.querySelectorAll('nav[aria-label="Primary"] a'));
-        
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
-                
-                const id = entry.target.id;
-                navLinks.forEach(link => {
-                  const matches = link.getAttribute('href') === `#${id}`;
-                  link.setAttribute('aria-current', matches ? 'true' : 'false');
-                });
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-            rootMargin: '0px 0px -40px 0px'
-          }
-        );
-        
-        sections.forEach(section => {
-          section.style.animationPlayState = 'paused';
-          observer.observe(section);
-        });
-        
-        this.observers.push(observer);
-      }
-      
-      setupModal() {
-        const modal = document.getElementById('projectModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalTech = document.getElementById('modalTech');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalDemo = document.getElementById('modalDemo');
-        const modalCode = document.getElementById('modalCode');
-        const modalClose = document.getElementById('modalClose');
-        
-        const projectData = {
-          'unraid-homelab': {
-            title: 'Unraid Homelab — Observed, Segmentable, and Kind',
-            tech: 'Unraid • Docker Compose • Traefik • Authelia • WireGuard (Gluetun) • AdGuard Home + Unbound • Prometheus/Grafana',
-            description: 'Opinionated home server powering media, research, and prototypes. Highlights: network segmentation (proxynet vs default), SSO via Authelia, DNS privacy stack (AdGuard Home ↔ Unbound), per‑service health‑gating, and a stack‑health script (v10–v14) that performs container liveness, Traefik route discovery via labels, DNS sanity checks, and timed reports. Includes exporters and dashboards for observability, plus CI hooks for repeatable rollouts.',
-            demo: 'https://login.resist.dev',
-            code: 'https://gitlab.com/cacheflowe/unraid'
-          },
-          'thick-pigeon': {
-            title: 'THICK PIGEON — Multiplayer Feeding Arena (Web)',
-            tech: 'Three.js • WebGL/GLSL • WebRTC (PeerJS) • Node/Express • Kasm (sandbox) • Docker',
-            description: 'A playful peer‑to‑peer web game and site exploring real‑time interaction and physics‑adjacent motion in the browser. Features custom particle fields, animated banners, and a lightweight signaling service for quick P2P sessions. Built as a canvas for performance experiments, keyboard‑first accessibility, and delightful micro‑motion without noise.',
-            demo: 'https://thickpigeon.com',
-            code: 'https://gitlab.com/cacheflowe/thick-pigeon#'
-          },
-          'cryptkeys': {
-            title: 'cryptkeys.rip — Ghosts from Structure',
-            tech: 'Python • DSP • Feature Extraction • Generative Audio • CLI Tooling',
-            description: 'An experimental music project that transforms structural fingerprints—envelopes, rhythm, spectral contours—into new, abstracted compositions. Includes Crypt Mortician, a CLI that oversees the lifecycle of .crypt files: scheduled "deaths," archival burials, waveform memorials, and ASCII certificates. The Crypt Resurrector rebuilds ghostly signals from stored features with optional reverb/noise atmospherics.',
-            demo: 'https://cryptkeys.rip',
-            code: 'https://gitlab.com/cacheflowe/cryptkeys'
-          },
-          'design-system': {
-            title: 'Component & Pattern Library',
-            tech: 'TypeScript • React • Storybook • CSS',
-            description: 'A modest design system capturing typographic rhythm, accessible controls, and motion guidelines that respect reduced‑motion preferences. Serves internal tools and personal projects with consistent, low‑noise primitives.',
-            demo: 'https://storybook.example.com',
-            code: 'https://github.com/brice-allen/design-system'
-          }
-        };
-        
-        const openModal = (projectId) => {
-          const data = projectData[projectId];
-          if (!data) return;
-          
-          modalTitle.textContent = data.title;
-          modalTech.textContent = data.tech;
-          modalDescription.textContent = data.description;
-          modalDemo.href = data.demo;
-          modalCode.href = data.code;
-          
-          modal.classList.add('active');
-          document.body.style.overflow = 'hidden';
-          modalClose.focus();
-        };
-        
-        const closeModal = () => {
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        };
-        
-        // Project card interactions
-        document.querySelectorAll('.project').forEach(card => {
-          card.addEventListener('click', () => {
-            openModal(card.dataset.project);
-          });
-          
-          card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openModal(card.dataset.project);
-            }
-          });
-        });
-        
-        // Close modal events
-        modalClose.addEventListener('click', closeModal);
-        
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) closeModal();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-          }
-        });
-      }
-      
-      setupThemeToggle() {
-        const themeToggle = document.getElementById('themeToggle');
-        const sunIcon = themeToggle.querySelector('.sun-icon');
-        const moonIcon = themeToggle.querySelector('.moon-icon');
-        
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const setTheme = (isDark) => {
-          if (isDark) {
-            document.body.classList.add('dark-mode');
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-            localStorage.setItem('theme', 'dark');
-          } else {
-            document.body.classList.remove('dark-mode');
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-            localStorage.setItem('theme', 'light');
-          }
-        };
-        
-        // Initialize theme
-        setTheme(savedTheme === 'dark' || (!savedTheme && prefersDark));
-        
-        // Toggle theme
-        themeToggle.addEventListener('click', () => {
-          const isDark = !document.body.classList.contains('dark-mode');
-          setTheme(isDark);
-        });
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!localStorage.getItem('theme')) {
-            setTheme(e.matches);
-          }
-        });
-      }
-      
-      setupBackToTop() {
-        const backToTop = document.getElementById('backToTop');
-        
-        const toggleVisibility = () => {
-          if (window.pageYOffset > 300) {
-            backToTop.classList.add('visible');
-          } else {
-            backToTop.classList.remove('visible');
-          }
-        };
-        
-        window.addEventListener('scroll', toggleVisibility, { passive: true });
-        
-        backToTop.addEventListener('click', () => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-      }
-      
-      setupSmoothScroll() {
-        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-              targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-              
-              // Update focus for accessibility
-              targetElement.setAttribute('tabindex', '-1');
-              targetElement.focus();
-            }
-          });
-        });
-      }
-      
-      setupParallax() {
-        if (this.prefersReducedMotion) return;
-        
-        const hero = document.querySelector('.hero h2');
-        if (!hero) return;
-        
-        let ticking = false;
-        
-        const updateParallax = () => {
-          const scrolled = window.pageYOffset;
-          hero.style.transform = `translateY(${scrolled * 0.2}px)`;
-          ticking = false;
-        };
-        
-        document.addEventListener('scroll', () => {
-          if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-          }
-        }, { passive: true });
-      }
-      
-      monitorPerformance() {
-        if (!performance || !performance.getEntriesByType) return;
-        
-        window.addEventListener('load', () => {
-          const navigation = performance.getEntriesByType('navigation')[0];
-          if (navigation) {
-            console.log('%cPage Load Performance', 'color:#9c6644;font-weight:bold;font-size:14px');
-            console.log(`Total Load Time: ${navigation.loadEventEnd.toFixed(2)}ms`);
-            
-            const paintEntries = performance.getEntriesByType('paint');
-            paintEntries.forEach(entry => {
-              console.log(`${entry.name}: ${entry.startTime.toFixed(2)}ms`);
-            });
-          }
-        });
-      }
-      
-      destroy() {
-        if (this.particleField) {
-          this.particleField.destroy();
-        }
-        this.observers.forEach(observer => observer.disconnect());
-      }
-    }
-    
-    // Initialize application
-    const app = new PortfolioApp();
-    
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-      app.destroy();
+
+    <nav class="spool" id="spool" aria-label="Threads — filter and connect the patches">
+      <span class="spool-label">pull a thread —</span>
+      <button class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
+      <button class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
+      <button class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
+      <button class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
+      <button class="thread-btn" data-thread="time" aria-pressed="false">time</button>
+      <button class="spool-clear" id="spoolClear">let go (esc)</button>
+    </nav>
+  </header>
+
+  <main class="field" id="field">
+    <svg id="threadLayer" aria-hidden="true"></svg>
+
+    <!-- ~ manifesto ~ -->
+    <section class="patch manifesto wide">
+      <p>
+        this site has no images. i have <em>aphantasia</em> — when i close my eyes,
+        nothing is there. no apple, no beach, no faces. what i have instead is
+        structure: everything connected to everything, a web you can pull on
+        from any point and feel the whole thing move.
+      </p>
+      <p>
+        so this is a portfolio built the way i actually think. the work below is
+        cut into patches and sewn down. pull a thread above and watch what
+        holds together.
+      </p>
+      <p class="aside">// no framework, no build step, no tracking. one file. view source — there's more in there.</p>
+    </section>
+
+    <!-- ~ tower ~ -->
+    <section class="patch mid" data-threads="signal repair">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span><span class="tag" data-t="repair">repair</span></div>
+      <h2>tower — a house that runs on containers</h2>
+      <p class="meta">unraid &middot; 44 containers &middot; traefik + authelia &middot; gluetun/wireguard &middot; adguard &rarr; unbound &middot; borgmatic</p>
+      <p>
+        the home server. media, dashboards, dns that trusts no upstream
+        (<strong>unbound talking straight to the roots</strong>), single sign-on at the
+        front door, segmented networks behind it, and encrypted backups buried
+        offsite nightly — backups that have actually been restored, which is the
+        only kind that count.
+      </p>
+      <p>
+        it is opinionated infrastructure for two people and a dog, maintained
+        like it serves ten thousand.
+      </p>
+      <div class="links"><a href="https://gitlab.com/cacheflowe/unraid" target="_blank" rel="noopener">gitlab &rarr;</a></div>
+    </section>
+
+    <!-- ~ stack-health ~ -->
+    <section class="patch slim" data-threads="signal repair">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span><span class="tag" data-t="repair">repair</span></div>
+      <h2>stack-health.sh</h2>
+      <p class="meta">bash &middot; v17.6 and counting &middot; proper git history</p>
+      <p>
+        a shell script that grew a personality. container liveness, traefik
+        route discovery via labels, dns sanity, vpn egress checks, timed
+        reports. proof that the best monitoring tool is <strong>the one you
+        actually read</strong>.
+      </p>
+    </section>
+
+    <!-- ~ cryptkeys ~ -->
+    <section class="patch mid" data-threads="sound ghosts time signal">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="sound">sound</span><span class="tag" data-t="ghosts">ghosts</span><span class="tag" data-t="time">time</span></div>
+      <h2>cryptkeys.rip — music made of ghosts</h2>
+      <p class="meta">python &middot; dsp &middot; fastapi &middot; docker &middot; a graveyard with a ui</p>
+      <p>
+        audio distilled into structural fingerprints — envelopes, rhythm,
+        spectral contours — and then the body is deleted. a <strong>mortician</strong>
+        schedules deaths for <code>.crypt</code> files and issues ascii death
+        certificates. a <strong>resurrector</strong> raises them later as something
+        adjacent: recognizably the same skeleton, wearing different air.
+      </p>
+      <p>
+        started as a cli, now a full web app with decay models and a graveyard
+        you can walk.
+      </p>
+      <div class="links"><a href="https://cryptkeys.rip" target="_blank" rel="noopener">the graveyard &rarr;</a><a href="https://gitlab.com/cacheflowe/cryptkeys" target="_blank" rel="noopener">gitlab &rarr;</a></div>
+    </section>
+
+    <!-- ~ thick pigeon ~ -->
+    <section class="patch slim" data-threads="signal">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <h2>THICK PIGEON</h2>
+      <p class="meta">three.js &middot; webrtc/peerjs &middot; node &middot; docker</p>
+      <p>
+        a peer-to-peer feeding arena in a browser tab. no accounts, no server
+        state worth stealing, just a lightweight signaling service and however
+        much game fits before anyone has to install anything.
+      </p>
+      <div class="links"><a href="https://thickpigeon.com" target="_blank" rel="noopener">feed &rarr;</a></div>
+    </section>
+
+    <!-- ~ loudspeakers ~ -->
+    <section class="patch mid" data-threads="sound repair">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="sound">sound</span><span class="tag" data-t="repair">repair</span></div>
+      <h2>loudspeakers, from filament up</h2>
+      <p class="meta">3d printing (cf-petg) &middot; acoustic design &middot; crossover work &middot; measurement</p>
+      <p>
+        printed spherical enclosures around little dayton 3.5s — port geometry,
+        damping, print orientation all argued over. open-baffle experiments
+        with full-range paper. a two-way build with a 10-inch woofer that
+        <strong>owes an apology to devore</strong>.
+      </p>
+      <p>a crossover is just eq you had to solder. i mean that affectionately.</p>
+    </section>
+
+    <!-- ~ nikko ~ -->
+    <section class="patch slim" data-threads="sound repair time ghosts">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="repair">repair</span><span class="tag" data-t="time">time</span></div>
+      <h2>nikko trm-800, $10</h2>
+      <p class="meta">1977 flagship &middot; dc offset fault &middot; full recap</p>
+      <p>
+        bought for ten dollars with dc on the outputs. diagnosed, recapped,
+        brought back. vintage gear is the original open source: <strong>schematics
+        in the manual, parts you can see</strong>, failure modes you can reason
+        about with a meter and patience.
+      </p>
+    </section>
+
+    <!-- ~ meshtastic ~ -->
+    <section class="patch slim" data-threads="signal">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <h2>hopgoblin</h2>
+      <p class="meta">meshtastic &middot; lora &middot; 900&nbsp;MHz &middot; router node</p>
+      <p>
+        a mesh node on the balcony, relaying packets for strangers it will
+        never meet. no sim, no subscription — <strong>infrastructure as a
+        neighborly act</strong>. a 1-watt dedicated relay is next.
+      </p>
+    </section>
+
+    <!-- ~ mends ~ -->
+    <section class="patch slim" data-threads="repair time">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="repair">repair</span><span class="tag" data-t="time">time</span></div>
+      <h2>visible mends</h2>
+      <p class="meta">sashiko &middot; boro &middot; the aesthetic of this page</p>
+      <p>
+        i mend things so the mend shows — white thread on indigo, new caps in
+        old amps, a reindexed database. <strong>things that show their repairs
+        tell the truth about time.</strong> hiding the stitch is just lying with
+        extra steps.
+      </p>
+    </section>
+
+    <!-- ~ field work ~ -->
+    <section class="patch slim" data-threads="time ghosts">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="time">time</span><span class="tag" data-t="ghosts">ghosts</span></div>
+      <h2>field work</h2>
+      <p class="meta">thrift bins &middot; estate sales &middot; dead formats &middot; a darkroom</p>
+      <p>
+        weekends reading strangers' lives through what's left behind: film
+        cameras, cassettes with handwriting on them, speakers someone loved
+        once. some of it gets repaired. some of it gets listened to.
+        <strong>all of it gets considered.</strong>
+      </p>
+    </section>
+
+    <!-- ~ previous lives ~ -->
+    <section class="patch mid" data-threads="time">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="time">time</span></div>
+      <h2>previous lives</h2>
+      <p class="meta">advanced sommelier track &middot; beverage director, telluride &middot; urban winery, ~25,000 cases</p>
+      <p>
+        before software there was wine: cellar floors, service, a winery scaled
+        from nothing. wine is <strong>systems thinking with one release per
+        year</strong> — you get a single deploy each harvest and the rollback
+        story is terrible. it also taught me palate, hospitality, and how to
+        stay calm while everything ferments.
+      </p>
+      <p>i still take the exams. the practical is a kind of live debugging, blind.</p>
+    </section>
+
+    <!-- ~ unnamed ~ -->
+    <section class="patch slim" data-threads="ghosts">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="ghosts">ghosts</span></div>
+      <h2>[unnamed]</h2>
+      <p class="meta">ongoing since high school &middot; no link &middot; on purpose</p>
+      <p>
+        an anonymous art practice. original <span class="redact">paintings placed in</span>
+        <span class="redact">thrift stores where</span> they'll be found rather
+        than shown. if you've ever taken one home, that was the point. it
+        doesn't go on a portfolio. this patch is the most you get.
+      </p>
+    </section>
+
+    <!-- ~ contact ~ -->
+    <section class="patch contact wide" data-threads="signal">
+      <div class="tags" aria-hidden="true"><span class="tag" data-t="signal">signal</span></div>
+      <h2>get a thread to me</h2>
+      <p>
+        open to collaborations and work that values clear edges and patient
+        internals — infrastructure, sound tools, odd instruments, systems that
+        explain themselves. i like small teams, honest logs, and problems that
+        are secretly about people.
+      </p>
+      <div class="links">
+        <a href="mailto:bk@protonmail.com">email &rarr;</a>
+        <a href="https://gitlab.com/cacheflowe" target="_blank" rel="noopener">gitlab &rarr;</a>
+        <a href="/resume.pdf" download>resume (pdf) &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="ticker" id="ticker" aria-hidden="true"></span>
+    <div class="fine">
+      <span>&copy; 2026 brice allen &middot; sewn by hand in denver</span>
+      <span>no cookies, no analytics, no images &middot; the threads are real svg</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+'use strict';
+/* ────────────────────────────────────────────────
+   the needle: draws threads through lit patches
+   ──────────────────────────────────────────────── */
+(function(){
+  const field = document.getElementById('field');
+  const svg = document.getElementById('threadLayer');
+  const spool = document.getElementById('spool');
+  const btns = Array.from(document.querySelectorAll('.thread-btn'));
+  const clearBtn = document.getElementById('spoolClear');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const THREAD_COLORS = {
+    sound:  'var(--ochre)',
+    signal: 'var(--denim)',
+    repair: 'var(--madder)',
+    ghosts: 'var(--sage)',
+    time:   'var(--ecru)'
+  };
+
+  let active = null;
+
+  function patchesFor(thread){
+    return Array.from(field.querySelectorAll('.patch[data-threads]'))
+      .filter(p => p.dataset.threads.split(/\s+/).includes(thread))
+      .sort((a,b) => {
+        const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        return (ra.top - rb.top) || (ra.left - rb.left);
+      });
+  }
+
+  function anchor(patch){
+    const fr = field.getBoundingClientRect();
+    const r = patch.getBoundingClientRect();
+    // stitch enters near a corner, not dead center — hand-sewn, not CAD
+    const jx = (patch.dataset.jx ??= (Math.random()*0.5 + 0.25).toFixed(3));
+    const jy = (patch.dataset.jy ??= (Math.random()*0.4 + 0.15).toFixed(3));
+    return {
+      x: r.left - fr.left + r.width * jx,
+      y: r.top - fr.top + r.height * jy
+    };
+  }
+
+  function clearSVG(){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+  function sew(thread){
+    clearSVG();
+    const patches = patchesFor(thread);
+    if (patches.length < 1) return;
+    const pts = patches.map(anchor);
+    const color = THREAD_COLORS[thread] || 'var(--ecru)';
+    const ns = 'http://www.w3.org/2000/svg';
+
+    // knots first
+    pts.forEach(pt => {
+      const c = document.createElementNS(ns,'circle');
+      c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y);
+      c.setAttribute('r', 3.2);
+      c.setAttribute('fill', color);
+      c.classList.add('thread-knot');
+      svg.appendChild(c);
     });
-  </script>
+
+    // one continuous thread stitched through, in reading order
+    for (let i = 0; i < pts.length - 1; i++){
+      const a = pts[i], b = pts[i+1];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      // slack in the thread — bow it sideways a little
+      const mx = a.x + dx/2 - dy * 0.18;
+      const my = a.y + dy/2 + dx * 0.12;
+      const path = document.createElementNS(ns,'path');
+      path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`);
+      path.setAttribute('stroke', color);
+      path.classList.add('thread-path');
+      if (!reduced) path.style.animationDelay = `${i * -1.7}s`;
+      svg.appendChild(path);
+    }
+
+    requestAnimationFrame(() => {
+      svg.querySelectorAll('.thread-path, .thread-knot').forEach(el => el.classList.add('on'));
+    });
+  }
+
+  function setThread(thread){
+    active = thread;
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.thread === thread)));
+    field.querySelectorAll('.patch[data-threads]').forEach(p => {
+      p.classList.toggle('lit', !!thread && p.dataset.threads.split(/\s+/).includes(thread));
+    });
+    field.classList.toggle('threading', !!thread);
+    spool.classList.toggle('active', !!thread);
+    if (thread) sew(thread); else clearSVG();
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => {
+    setThread(active === b.dataset.thread ? null : b.dataset.thread);
+  }));
+  clearBtn.addEventListener('click', () => setThread(null));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setThread(null); });
+
+  let rz;
+  window.addEventListener('resize', () => {
+    clearTimeout(rz);
+    rz = setTimeout(() => { if (active) sew(active); }, 150);
+  }, { passive:true });
+
+  // redraw once fonts settle (layout shifts move the anchors)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { if (active) sew(active); });
+  }
+})();
+
+/* ────────────────────────────────────────────────
+   the tray: patches develop as they enter the light
+   ──────────────────────────────────────────────── */
+(function(){
+  const patches = document.querySelectorAll('.patch');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)){
+    patches.forEach(p => p.classList.add('developed'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting){
+        // stagger like prints going into the tray one at a time
+        setTimeout(() => en.target.classList.add('developed'),
+          (Array.from(patches).indexOf(en.target) % 3) * 140);
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  patches.forEach(p => io.observe(p));
+})();
+
+/* ────────────────────────────────────────────────
+   the safelight
+   ──────────────────────────────────────────────── */
+(function(){
+  const btn = document.getElementById('safelight');
+  const label = document.getElementById('safelightLabel');
+  let saved = null;
+  try { saved = localStorage.getItem('safelight'); } catch(e){}
+
+  function set(on, persist){
+    document.documentElement.classList.toggle('safelight', on);
+    btn.setAttribute('aria-pressed', String(on));
+    label.textContent = on ? 'safelight: on' : 'safelight: off';
+    if (persist) { try { localStorage.setItem('safelight', on ? '1' : '0'); } catch(e){} }
+  }
+  set(saved === '1', false);
+  btn.addEventListener('click', () => {
+    set(!document.documentElement.classList.contains('safelight'), true);
+  });
+})();
+
+/* ────────────────────────────────────────────────
+   the log ticker: quiet proof of life
+   ──────────────────────────────────────────────── */
+(function(){
+  const el = document.getElementById('ticker');
+  if (!el) return;
+  const lines = [
+    '[stack-health v17.6] 44/44 containers healthy · dns resolving · vpn egress ok',
+    '[borgmatic] nightly archive complete · verified · sleeping until 03:00',
+    '[crypt-mortician] 2 files scheduled to die this week · certificates prepared',
+    '[hopgoblin] relayed 14 packets for strangers today · 900MHz · you\u2019re welcome',
+    '[darkroom] safelight on · paper in the tray · developer at 20\u00b0C, 60 seconds',
+    '[unbound] answered from root · no upstream was consulted · as intended',
+    '[turntable] side B · do not refactor during side B',
+    '[sashiko] running stitch, 7px on 9px off · same as the css'
+  ];
+  let i = Math.floor(Math.random() * lines.length);
+  function tick(){
+    el.textContent = lines[i % lines.length];
+    i++;
+  }
+  tick();
+  setInterval(tick, 6500);
+})();
+
+/* you opened the back of the enclosure. */
+console.log('%cno images. i think in threads.%c\n%cpull one: sound · signal · repair · ghosts · time', 'font-style:italic;font-size:14px;color:#e9ddc4;background:#131a25;padding:6px 10px', '', 'font-family:monospace;color:#cf9f4e');
+</script>
 </body>
 </html>
