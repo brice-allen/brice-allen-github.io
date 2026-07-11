@@ -28,7 +28,26 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#131a25">
 <script>
-try { document.documentElement.classList.add('js'); } catch(e) {}
+(function(){
+  try {
+    const root = document.documentElement;
+    root.classList.add('js');
+
+    try {
+      if (localStorage.getItem('safelight') === '1') {
+        root.classList.add('safelight');
+        const theme = document.querySelector('meta[name="theme-color"]');
+        if (theme) theme.setAttribute('content', '#0b0705');
+      }
+    } catch(_) {}
+
+    // If the main script fails to parse or execute, reveal the content and
+    // remove controls that would otherwise be inert.
+    window.__portfolioBootTimer = setTimeout(function(){
+      root.classList.add('js-failed');
+    }, 3000);
+  } catch(_) {}
+})();
 </script>
 <style>
 /* ============================================================
@@ -44,8 +63,8 @@ try { document.documentElement.classList.add('js'); } catch(e) {}
   --patch-d:    #243448;
   --ecru:       #e9ddc4;
   --ecru-dim:   #b6ab93;
-  --ecru-faint: #7d7663;
-  --madder:     #c4553d;
+  --ecru-faint: #a59b84;
+  --madder:     #e77d65;
   --ochre:      #cf9f4e;
   --sage:       #8fa583;
   --denim:      #7f9cc0;
@@ -65,8 +84,8 @@ html.safelight{
   --patch-c:    #110905;
   --patch-d:    #1f100a;
   --ecru:       #ff8a5e;
-  --ecru-dim:   #c05f3d;
-  --ecru-faint: #7a4630;
+  --ecru-dim:   #d87553;
+  --ecru-faint: #bd674a;
   --madder:     #ff5a3c;
   --ochre:      #ff8a5e;
   --sage:       #e06a45;
@@ -76,7 +95,7 @@ html.safelight{
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;color-scheme:dark}
 body{
   background:var(--cloth);
   color:var(--ecru);
@@ -106,6 +125,17 @@ a:hover{color:var(--ochre);border-bottom-style:solid;border-color:var(--ochre)}
 
 .skip{position:absolute;left:-9999px}
 .skip:focus{position:fixed;left:1rem;top:1rem;z-index:999;background:var(--ecru);color:var(--cloth);padding:.6rem 1rem;font-family:var(--mono);font-size:.75rem}
+.visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
 
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem)}
 
@@ -133,6 +163,7 @@ h1 .slash{color:var(--madder);font-style:italic}
 .subtitle .dim{color:var(--ecru-faint)}
 
 .safelight-toggle{
+  display:none;
   font-family:var(--mono);
   font-size:.72rem;
   letter-spacing:.08em;
@@ -146,6 +177,7 @@ h1 .slash{color:var(--madder);font-style:italic}
 }
 .safelight-toggle:hover{color:var(--madder);border-color:var(--madder)}
 .safelight-toggle .lamp{display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--ecru-faint);margin-right:.6em;transition:background .3s, box-shadow .3s}
+html.js .safelight-toggle{display:inline-block}
 html.safelight .safelight-toggle .lamp{background:var(--madder);box-shadow:0 0 8px var(--madder)}
 
 /* ============================================================
@@ -156,11 +188,12 @@ html.safelight .safelight-toggle .lamp{background:var(--madder);box-shadow:0 0 8
   padding:1.4rem 0 1.6rem;
   border-top:1px dashed var(--stitch-dim);
   border-bottom:1px dashed var(--stitch-dim);
-  display:flex;
+  display:none;
   align-items:baseline;
   gap:1.1rem;
   flex-wrap:wrap;
 }
+html.js .spool{display:flex}
 .spool-label{
   font-family:var(--mono);
   font-size:.72rem;
@@ -206,13 +239,10 @@ html.safelight .thread-btn{color:var(--ecru)}
   color:var(--ecru-faint);
   background:none;border:none;cursor:pointer;
   margin-left:auto;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .3s;
   letter-spacing:.08em;
 }
-.spool.active .spool-clear{opacity:1;pointer-events:auto}
 .spool-clear:hover{color:var(--madder)}
+.spool-clear[hidden]{display:none}
 
 /* ============================================================
    the field of patches
@@ -294,6 +324,9 @@ html.safelight .thread-btn{color:var(--ecru)}
    only when js is alive — with scripts off, everything simply shows. */
 html.js .patch{opacity:0;filter:contrast(.05) brightness(1.9);}
 html.js .patch.developed{opacity:1;filter:none;transition:opacity 1.4s var(--ease), filter 1.6s var(--ease), transform .55s var(--ease)}
+html.js-failed .patch{opacity:1;filter:none;transition:none}
+html.js-failed .safelight-toggle,
+html.js-failed .spool{display:none}
 .field.threading .patch.developed{transition:opacity .55s var(--ease), filter .55s var(--ease), transform .55s var(--ease)}
 
 /* patch anatomy */
@@ -465,19 +498,19 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
           <span class="dim">denver, colorado &middot; cs, university of colorado denver &middot; open to interesting work</span>
         </p>
       </div>
-      <button class="safelight-toggle" id="safelight" aria-pressed="false">
+      <button type="button" class="safelight-toggle" id="safelight" aria-pressed="false">
         <span class="lamp" aria-hidden="true"></span><span id="safelightLabel">safelight: off</span>
       </button>
     </div>
 
-    <nav class="spool" id="spool" aria-label="Threads — filter and connect the patches">
+    <nav class="spool" id="spool" aria-label="Threads — highlight and connect the patches">
       <span class="spool-label">pull a thread —</span>
-      <button class="thread-btn" data-thread="sound" aria-pressed="false">sound</button>
-      <button class="thread-btn" data-thread="signal" aria-pressed="false">signal</button>
-      <button class="thread-btn" data-thread="repair" aria-pressed="false">repair</button>
-      <button class="thread-btn" data-thread="ghosts" aria-pressed="false">ghosts</button>
-      <button class="thread-btn" data-thread="time" aria-pressed="false">time</button>
-      <button class="spool-clear" id="spoolClear">let go (esc)</button>
+      <button type="button" class="thread-btn" data-thread="sound" aria-pressed="false" aria-controls="field">sound</button>
+      <button type="button" class="thread-btn" data-thread="signal" aria-pressed="false" aria-controls="field">signal</button>
+      <button type="button" class="thread-btn" data-thread="repair" aria-pressed="false" aria-controls="field">repair</button>
+      <button type="button" class="thread-btn" data-thread="ghosts" aria-pressed="false" aria-controls="field">ghosts</button>
+      <button type="button" class="thread-btn" data-thread="time" aria-pressed="false" aria-controls="field">time</button>
+      <button type="button" class="spool-clear" id="spoolClear" aria-controls="field" hidden>let go (esc)</button>
     </nav>
   </header>
 
@@ -485,7 +518,8 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
     <svg id="threadLayer" aria-hidden="true" focusable="false"></svg>
 
     <!-- ~ manifesto ~ -->
-    <section class="patch manifesto wide">
+    <section class="patch manifesto wide" aria-labelledby="manifesto-title">
+      <h2 class="visually-hidden" id="manifesto-title">How this portfolio works</h2>
       <p>
         this site has no images. i have <em>aphantasia</em> — when i close my eyes,
         nothing is there. no apple, no beach, no faces. what i have instead is
@@ -670,7 +704,7 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem
       <div class="links">
         <a href="mailto:bk@protonmail.com">email &rarr;</a>
         <a href="https://gitlab.com/cacheflowe" target="_blank" rel="noopener">gitlab &rarr;</a>
-        <a href="/resume.pdf" download>resume (pdf) &rarr;</a>
+        <a href="/resume.pdf">resume (pdf) &rarr;</a>
       </div>
     </section>
   </main>
@@ -792,6 +826,7 @@ safe('needle', function(){
     });
     field.classList.toggle('threading', !!thread);
     spool.classList.toggle('active', !!thread);
+    clearBtn.hidden = !thread;
     if (thread) sew(thread); else clearSVG();
   }
 
@@ -811,9 +846,6 @@ safe('needle', function(){
     t.addEventListener('click', e => {
       e.stopPropagation();
       setThread(active === t.dataset.t ? null : t.dataset.t);
-      try {
-        spool.scrollIntoView({ block:'nearest', behavior: reduced ? 'auto' : 'smooth' });
-      } catch(_) {}
     });
   });
 
@@ -895,17 +927,18 @@ safe('ticker', function(){
     '[turntable] side B · do not refactor during side B',
     '[sashiko] running stitch, 7px on 9px off · same as the css'
   ];
-  let i = Math.floor(Math.random() * lines.length);
-  function tick(){
-    el.textContent = lines[i % lines.length];
-    i++;
-  }
-  tick();
-  setInterval(tick, 6500);
+  // Pick one quiet proof-of-life line per page load. Avoid continuously
+  // updating adjacent content or requiring a pause control.
+  const i = Math.floor(Math.random() * lines.length);
+  el.textContent = lines[i];
 });
 
 /* you opened the back of the enclosure. */
 console.log('%cno images. i think in threads.%c\n%cpull one: sound · signal · repair · ghosts · time', 'font-style:italic;font-size:14px;color:#e9ddc4;background:#131a25;padding:6px 10px', '', 'font-family:monospace;color:#cf9f4e');
+
+if (window.__portfolioBootTimer) clearTimeout(window.__portfolioBootTimer);
+document.documentElement.classList.remove('js-failed');
+document.documentElement.classList.add('js-ready');
 </script>
 </body>
 </html>
